@@ -19,6 +19,11 @@ class FindNamedClassVisitor
     explicit FindNamedClassVisitor(ASTContext *Context)
       : Context(Context) {}
 
+    bool VisitDecl(Decl *D) {
+      //D->dump();
+      return true;
+    }
+
     bool VisitFunctionDecl(FunctionDecl *Declaration) {
       cout << "func|";
       auto name_info = Declaration->getNameInfo().getName();

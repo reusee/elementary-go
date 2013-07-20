@@ -32,7 +32,7 @@ EXES = $(OBJECTS:.o=)
 							$(shell llvm-config --libs)
 
 all: $(OBJECTS) $(EXES)
-	./parse_header /usr/include/elementary-1/Elementary.h `pkg-config --cflags-only-I elementary` > header_info
+	./parse_header all.h `pkg-config --cflags-only-I elementary emotion eio` > header_info
 
 %: %.o
 	$(CXX) -o $@ $< $(CLANGLIBS) $(LLVMLDFLAGS)
