@@ -24,6 +24,11 @@ class FindNamedClassVisitor
       return true;
     }
 
+    bool VisitEnumConstantDecl(EnumConstantDecl *D) {
+      cout << "enum|" << D->getNameAsString() << endl;
+      return true;
+    }
+
     bool VisitFunctionDecl(FunctionDecl *Declaration) {
       cout << "func|";
       auto name_info = Declaration->getNameInfo().getName();
