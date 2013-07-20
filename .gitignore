@@ -1,2 +1,5 @@
 *.o
 /ref
+tools/all_decl
+tools/parse_header
+/lib
