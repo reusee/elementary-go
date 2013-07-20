@@ -4,13 +4,22 @@ import (
   "io/ioutil"
   "log"
   "strings"
+  "sort"
+  "os"
   "fmt"
 )
+
+func init() {
+  fmt.Printf("")
+}
 
 func main() {
   infoBs, err := ioutil.ReadFile("header_info")
   if err != nil { log.Fatal(err) }
+
   cFuncs := make([]CFunc, 0)
+  cEnums := make(map[string]string)
+
   for _, line := range strings.Split(string(infoBs), "\n") {
     lineSp := strings.Split(line, "|")
     if lineSp[0] == "func" { // process function
@@ -23,10 +32,28 @@ func main() {
         }
       }
       if !inModule { continue }
-      fmt.Printf("%s\n", cfunc.Name)
       cFuncs = append(cFuncs, cfunc)
+    } else if lineSp[0] == "enum" {
+      name := lineSp[1]
+      enumloop: for _, m := range C_MODULES {
+        m = strings.ToUpper(m)
+        if strings.HasPrefix(name, m) {
+          name = name[len(m):]
+          if am, has := cEnums[name]; has {
+            if preferM, has := PREFER_ENUM[name]; has {
+              cEnums[name] = preferM
+            } else {
+              log.Fatalf("enum conflict: %s %s %s, add entry to PREFER_ENUM to resolve\n", name, m, am)
+            }
+          }
+          cEnums[name] = m
+          break enumloop
+        }
+      }
     }
   }
+
+  genEnums(cEnums)
 }
 
 func processCFunc(lineSp []string) CFunc {
@@ -51,4 +78,24 @@ func processCFunc(lineSp []string) CFunc {
     ParamTypes: paramTypes,
   }
   return cfunc
+}
+
+func genEnums(enums map[string]string) {
+  lines := make([]string, 0)
+  for name, module := range enums {
+    lines = append(lines, fmt.Sprintf("  %s = C.%s%s\n", name, module, name))
+  }
+  sort.Strings(lines)
+  outputFile, err := os.Create("../enum.go")
+  if err != nil { log.Fatal(err) }
+  outputFile.Write([]byte(`package elm
+//#include <Elementary.h>
+import "C"
+const (
+`))
+  for _, l := range lines {
+    outputFile.Write([]byte(l))
+  }
+  outputFile.Write([]byte(")\n"))
+  outputFile.Close()
 }

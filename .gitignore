@@ -3,3 +3,6 @@
 tools/all_decl
 tools/parse_header
 /lib
+gen/doc
+gen/gen
+header_info
