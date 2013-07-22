@@ -29,6 +29,19 @@ class FindNamedClassVisitor
       return true;
     }
 
+    bool VisitTypedefDecl(TypedefDecl *D) {
+      auto t = D->getUnderlyingType();
+      if (!t.isNull()) {
+        cout << "typedef|" << D->getNameAsString();
+        auto t_split = t.split();
+        cout << "|" << QualType::getAsString(t_split);
+        auto d_split = t.getSplitDesugaredType();
+        cout << "|" << QualType::getAsString(d_split);
+        cout << endl;
+      }
+      return true;
+    }
+
     bool VisitFunctionDecl(FunctionDecl *Declaration) {
       cout << "func|";
       auto name_info = Declaration->getNameInfo().getName();

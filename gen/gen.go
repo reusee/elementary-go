@@ -50,11 +50,15 @@ func main() {
           break enumloop
         }
       }
+    // process typedef
+    } else if lineSp[0] == "typedef" {
+      processTypedef(lineSp)
     }
   }
 
   genEnums(cEnums)
-  genElmClasses(cFuncs)
+  classes := genElmClasses(cFuncs)
+  genEvasObjectMethods(cFuncs, classes)
 }
 
 func processCFunc(lineSp []string) CFunc {
