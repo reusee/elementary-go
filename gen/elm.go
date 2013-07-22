@@ -12,7 +12,7 @@ type Class struct {
   GoConstructFunc BridgeFunc
 }
 
-func genElmClasses(funcs []CFunc) {
+func genElmClasses(funcs []*CFunc) []Class {
   // find all constructors
   classes := make([]Class, 0)
   for _, fun := range funcs {
@@ -25,10 +25,12 @@ func genElmClasses(funcs []CFunc) {
         GoConstructFunc: makeGoConstructFunc(className, fun),
       }
       classes = append(classes, class)
+      fun.Exported = true
     }
   }
 
   genClasses(classes)
+  return classes
 }
 
 func convertToClassName(name string) string {
@@ -41,12 +43,8 @@ func convertToClassName(name string) string {
   return name
 }
 
-func makeGoConstructFunc(className string, fun CFunc) BridgeFunc {
-  gofunc := BridgeFunc{
-    ParamNames: make([]string, 0),
-    ParamTypes: make([]string, 0),
-    HelperCodes: make([]string, 0),
-  }
+func makeGoConstructFunc(className string, fun *CFunc) BridgeFunc {
+  gofunc := BridgeFunc{}
   gofunc.Name = "New" + className
   for i, name := range fun.ParamNames {
     gofunc.ConvertParam(name, fun.ParamTypes[i])
@@ -69,7 +67,14 @@ import (
   "unsafe"
 )
 
-type EvasObject interface {
+type EvasObject struct {
+  obj *C.Evas_Object
+}
+func (self *EvasObject) GetObj() *C.Evas_Object {
+  return self.obj
+}
+
+type EvasObjectInterface interface {
   GetObj() *C.Evas_Object
 }
 `))

@@ -15,7 +15,7 @@ func main() {
   infoBs, err := ioutil.ReadFile("header_info")
   if err != nil { log.Fatal(err) }
 
-  cFuncs := make([]CFunc, 0)
+  cFuncs := make([]*CFunc, 0)
   cEnums := make(map[string]string)
 
   for _, line := range strings.Split(string(infoBs), "\n") {
@@ -30,7 +30,9 @@ func main() {
           break
         }
       }
-      if !inModule { continue }
+      if !inModule {
+        continue
+      }
       cFuncs = append(cFuncs, cfunc)
     // process enum
     } else if lineSp[0] == "enum" {
@@ -59,9 +61,19 @@ func main() {
   genEnums(cEnums)
   classes := genElmClasses(cFuncs)
   genEvasObjectMethods(cFuncs, classes)
+
+  exported := 0
+  for _, fun := range cFuncs {
+    if fun.Exported {
+      exported++
+    } else {
+      p("%s\n", fun.Name)
+    }
+  }
+  p("exported %d / %d functions\n", exported, len(cFuncs))
 }
 
-func processCFunc(lineSp []string) CFunc {
+func processCFunc(lineSp []string) *CFunc {
   name := lineSp[1]
   returnType := lineSp[2]
   paramNames := make([]string, 0)
@@ -76,7 +88,7 @@ func processCFunc(lineSp []string) CFunc {
       paramTypes = append(paramTypes, paramSp[0])
     }
   }
-  cfunc := CFunc{
+  cfunc := &CFunc{
     Name: name,
     ReturnType: returnType,
     ParamNames: paramNames,

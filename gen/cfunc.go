@@ -8,4 +8,5 @@ type CFunc struct {
   Name string
   ParamNames []string
   ParamTypes []string
+  Exported bool
 }

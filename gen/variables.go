@@ -11,14 +11,27 @@ var C_MODULES = []string{
   "elm_",
   "ethumb_",
   "evas_",
+  "eio_",
+  "emotion_",
 }
 
-//TODO
 var DISCARD_CONSTRUCT_FUNCS = map[string]bool {
-  // manually implement
+  // manually implement TODO
   "elm_win_util_standard_add": true,
   // deprecated
   "elm_scrolled_entry_add": true,
+}
+
+var DISCARD_METHOD_FUNCS = map[string]bool {
+  // Evas_Callback_Type not supported
+  "evas_object_event_callback_add": true,
+  "evas_object_event_callback_priority_add": true,
+  "evas_object_event_callback_del": true,
+  "evas_object_event_callback_del_full": true,
+  // Evas_Callback_Priority not supported
+  "evas_object_smart_callback_priority_add": true,
+  // varargs not supported
+  "evas_object_box_option_property_set": true,
 }
 
 var PREFER_ENUM = map[string]string{
