@@ -1,6 +1,26 @@
 package main
 
-//XXX
+var C_MODULES = []string{
+  "e_",
+  "ecore_",
+  "ecvt_",
+  "edje_",
+  "eet_",
+  "efreet_",
+  "eina_",
+  "elm_",
+  "ethumb_",
+  "evas_",
+}
+
+//TODO
+var DISCARD_CONSTRUCT_FUNCS = map[string]bool {
+  // manually implement
+  "elm_win_util_standard_add": true,
+  // deprecated
+  "elm_scrolled_entry_add": true,
+}
+
 var PREFER_ENUM = map[string]string{
   "ASPECT_CONTROL_NONE": "EVAS_",
   "ASPECT_CONTROL_NEITHER": "EVAS_",
