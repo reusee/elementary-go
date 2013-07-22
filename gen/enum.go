@@ -1,5 +1,6 @@
 package main
 
+//XXX
 var PREFER_ENUM = map[string]string{
   "ASPECT_CONTROL_NONE": "EVAS_",
   "ASPECT_CONTROL_NEITHER": "EVAS_",

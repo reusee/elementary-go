@@ -22,7 +22,8 @@ func main() {
 
   for _, line := range strings.Split(string(infoBs), "\n") {
     lineSp := strings.Split(line, "|")
-    if lineSp[0] == "func" { // process function
+    // process function
+    if lineSp[0] == "func" {
       cfunc := processCFunc(lineSp)
       inModule := false
       for _, m := range C_MODULES {
@@ -33,6 +34,7 @@ func main() {
       }
       if !inModule { continue }
       cFuncs = append(cFuncs, cfunc)
+    // process enum
     } else if lineSp[0] == "enum" {
       name := lineSp[1]
       enumloop: for _, m := range C_MODULES {
@@ -54,6 +56,7 @@ func main() {
   }
 
   genEnums(cEnums)
+  genElmClasses(cFuncs)
 }
 
 func processCFunc(lineSp []string) CFunc {

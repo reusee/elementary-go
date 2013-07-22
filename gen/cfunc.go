@@ -3,6 +3,7 @@ package main
 import (
 )
 
+//XXX
 var C_MODULES = []string{
   "e_",
   "ecore_",
