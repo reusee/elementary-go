@@ -55,13 +55,19 @@ class FindNamedClassVisitor
       cout << name;
       auto ret_type = Declaration->getResultType();
       auto ret_type_str = ret_type.getAsString();
+      if (ret_type->isFunctionPointerType() || ret_type->isFunctionType()) {
+        ret_type_str = "<function>";
+      }
       cout << "|" << ret_type_str;
       for (auto pi = Declaration->param_begin(), end = Declaration->param_end();
           pi != end; pi++ ) {
         auto param_type = (*pi)->getOriginalType();
         auto param_type_str =param_type.getAsString();
-        auto name_id = (*pi)->getIdentifier();
+        if (param_type->isFunctionPointerType() || param_type->isFunctionType()) {
+          param_type_str = "<function>";
+        }
         cout << "|" << param_type_str;
+        auto name_id = (*pi)->getIdentifier();
         if (name_id != NULL) {
           cout << "@" << name_id->getName().str();
         }
