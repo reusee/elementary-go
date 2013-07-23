@@ -32,6 +32,9 @@ var DISCARD_METHOD_FUNCS = map[string]bool {
   "evas_object_smart_callback_priority_add": true,
   // varargs not supported
   "evas_object_box_option_property_set": true,
+  // name conflicts
+  "evas_object_focus_set": true,
+  "evas_object_scale_set": true,
 }
 
 var PREFER_ENUM = map[string]string{

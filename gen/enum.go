@@ -5,11 +5,34 @@ import (
   "sort"
   "os"
   "log"
+  "strings"
 )
 
-func genEnums(enums map[string]string) {
+func (self *Generator) collectEnums() {
+  self.CEnums = make(map[string]string)
+  for _, info := range self.EnumInfos {
+    name := info[0]
+    enumloop: for _, m := range C_MODULES {
+      m = strings.ToUpper(m)
+      if strings.HasPrefix(name, m) {
+        name = name[len(m):]
+        if am, has := self.CEnums[name]; has {
+          if preferM, has := PREFER_ENUM[name]; has {
+            self.CEnums[name] = preferM
+          } else {
+            log.Fatalf("enum conflict: %s %s %s, add entry to PREFER_ENUM to resolve\n", name, m, am)
+          }
+        }
+        self.CEnums[name] = m
+        break enumloop
+      }
+    }
+  }
+}
+
+func (self *Generator) generateEnums() {
   lines := make([]string, 0)
-  for name, module := range enums {
+  for name, module := range self.CEnums {
     lines = append(lines, fmt.Sprintf("  %s = C.%s%s\n", name, module, name))
   }
   sort.Strings(lines)

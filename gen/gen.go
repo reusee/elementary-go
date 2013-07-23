@@ -1,9 +1,6 @@
 package main
 
 import (
-  "io/ioutil"
-  "log"
-  "strings"
   "fmt"
 )
 
@@ -11,88 +8,32 @@ func init() {
   fmt.Printf("")
 }
 
-func main() {
-  infoBs, err := ioutil.ReadFile("header_info")
-  if err != nil { log.Fatal(err) }
+type Generator struct {
+  FuncInfos [][]string
+  EnumInfos [][]string
+  TypedefInfos [][]string
 
-  cFuncs := make([]*CFunc, 0)
-  cEnums := make(map[string]string)
+  CFuncs []*CFunc
+  CEnums map[string]string
 
-  for _, line := range strings.Split(string(infoBs), "\n") {
-    lineSp := strings.Split(line, "|")
-    // process function
-    if lineSp[0] == "func" {
-      cfunc := processCFunc(lineSp)
-      inModule := false
-      for _, m := range C_MODULES {
-        if strings.HasPrefix(cfunc.Name, m) {
-          inModule = true
-          break
-        }
-      }
-      if !inModule {
-        continue
-      }
-      cFuncs = append(cFuncs, cfunc)
-    // process enum
-    } else if lineSp[0] == "enum" {
-      name := lineSp[1]
-      enumloop: for _, m := range C_MODULES {
-        m = strings.ToUpper(m)
-        if strings.HasPrefix(name, m) {
-          name = name[len(m):]
-          if am, has := cEnums[name]; has {
-            if preferM, has := PREFER_ENUM[name]; has {
-              cEnums[name] = preferM
-            } else {
-              log.Fatalf("enum conflict: %s %s %s, add entry to PREFER_ENUM to resolve\n", name, m, am)
-            }
-          }
-          cEnums[name] = m
-          break enumloop
-        }
-      }
-    // process typedef
-    } else if lineSp[0] == "typedef" {
-      processTypedef(lineSp)
-    }
-  }
-
-  genEnums(cEnums)
-  classes := genElmClasses(cFuncs)
-  genEvasObjectMethods(cFuncs, classes)
-
-  exported := 0
-  for _, fun := range cFuncs {
-    if fun.Exported {
-      exported++
-    } else {
-      p("%s\n", fun.Name)
-    }
-  }
-  p("exported %d / %d functions\n", exported, len(cFuncs))
+  Classes []*Class
 }
 
-func processCFunc(lineSp []string) *CFunc {
-  name := lineSp[1]
-  returnType := lineSp[2]
-  paramNames := make([]string, 0)
-  paramTypes := make([]string, 0)
-  for _, param := range lineSp[3:] {
-    paramSp := strings.Split(param, "@")
-    if len(paramSp) == 1 {
-      paramNames = append(paramNames, "")
-      paramTypes = append(paramTypes, paramSp[0])
-    } else {
-      paramNames = append(paramNames, paramSp[1])
-      paramTypes = append(paramTypes, paramSp[0])
-    }
-  }
-  cfunc := &CFunc{
-    Name: name,
-    ReturnType: returnType,
-    ParamNames: paramNames,
-    ParamTypes: paramTypes,
-  }
-  return cfunc
+func main() {
+  generator := new(Generator)
+  generator.collectHeaderInfo()
+  generator.collectCFuncs()
+  generator.collectEnums()
+  generator.processTypedefs()
+
+  generator.generateEnums()
+
+  generator.collectClasses()
+  generator.generateClasses()
+
+  generator.collectGeneralMethods()
+  generator.collectClassMethods()
+  generator.generateGeneralMethods()
+
+  generator.stat()
 }

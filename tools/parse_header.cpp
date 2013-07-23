@@ -1,3 +1,4 @@
+#include "clang/AST/Attr.h"
 #include "clang/AST/ASTContext.h"
 #include "clang/AST/ASTConsumer.h"
 #include "clang/AST/RecursiveASTVisitor.h"
@@ -43,6 +44,11 @@ class FindNamedClassVisitor
     }
 
     bool VisitFunctionDecl(FunctionDecl *Declaration) {
+      for (auto i = Declaration->attr_begin(), e = Declaration->attr_end(); i != e; i++) {
+        if ((*i)->getKind() == attr::Deprecated) {
+          return true; // discard deprecated functions
+        }
+      }
       cout << "func|";
       auto name_info = Declaration->getNameInfo().getName();
       auto name = name_info.getAsString();

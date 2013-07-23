@@ -17,45 +17,7 @@ type BridgeFunc struct {
   CgoFunc string
   CgoArguments []string
   ReturnExpression string
-}
-
-func (self *BridgeFunc) Gen() string {
-  ret := "func"
-  if self.Receiver != "" {
-    ret += " (self " + self.Receiver + ")"
-  }
-  ret += " " + self.Name + "("
-  for i, name := range self.ParamNames {
-    if i > 0 { ret += ", " }
-    ret += name + " " + self.ParamTypes[i]
-  }
-  ret += ") ("
-  for i, t := range self.ReturnTypes {
-    if i > 0 { ret += ", " }
-    ret += t
-  }
-  ret += ") {\n"
-  for _, code := range self.HelperCodes {
-    ret += "  " + code + "\n"
-  }
-  ret += "  "
-  if len(self.ReturnTypes) != 0 {
-    ret += "_cgo_return_ := "
-  }
-  ret += "C." + self.CgoFunc + "("
-  for i, arg := range self.CgoArguments {
-    if i > 0 { ret += ", " }
-    ret += arg
-  }
-  ret += ")\n"
-  for _, code := range self.HelperCodesAfterCgo {
-    ret += "  " + code + "\n"
-  }
-  if len(self.ReturnTypes) != 0 {
-    ret += "  return " + self.ReturnExpression + "\n"
-  }
-  ret += "}\n"
-  return ret
+  CFunc *CFunc
 }
 
 func (self *BridgeFunc) ConvertParam(name, t string) {
@@ -102,4 +64,43 @@ func tryDirectMap(t string) ParamMapFunc {
   return func(name string) (string, string, []string) {
     return name, goType, nil
   }
+}
+
+func (self *BridgeFunc) Gen() string {
+  ret := "func"
+  if self.Receiver != "" {
+    ret += " (self " + self.Receiver + ")"
+  }
+  ret += " " + self.Name + "("
+  for i, name := range self.ParamNames {
+    if i > 0 { ret += ", " }
+    ret += name + " " + self.ParamTypes[i]
+  }
+  ret += ") ("
+  for i, t := range self.ReturnTypes {
+    if i > 0 { ret += ", " }
+    ret += t
+  }
+  ret += ") {\n"
+  for _, code := range self.HelperCodes {
+    ret += "  " + code + "\n"
+  }
+  ret += "  "
+  if len(self.ReturnTypes) != 0 {
+    ret += "_cgo_return_ := "
+  }
+  ret += "C." + self.CgoFunc + "("
+  for i, arg := range self.CgoArguments {
+    if i > 0 { ret += ", " }
+    ret += arg
+  }
+  ret += ")\n"
+  for _, code := range self.HelperCodesAfterCgo {
+    ret += "  " + code + "\n"
+  }
+  if len(self.ReturnTypes) != 0 {
+    ret += "  return " + self.ReturnExpression + "\n"
+  }
+  ret += "}\n"
+  return ret
 }

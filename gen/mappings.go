@@ -65,6 +65,12 @@ var PARAM_MAPPINGS = map[string]ParamMapFunc{
     }
   },
 
+  "size_t": func(name string) (string, string, []string) {
+    return "_c_" + name, "uint64", []string{
+      fmt.Sprintf("_c_%s := C.size_t(%s)", name, name),
+    }
+  },
+
 }
 
 type ReturnMapFunc func() (mappedType string, helperCodes []string)
