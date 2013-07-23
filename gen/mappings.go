@@ -82,6 +82,11 @@ type ReturnMapFunc func() (mappedType string, helperCodes []string)
 
 var RETURN_MAPPINGS = map[string]ReturnMapFunc{
   // numerics
+  "short": func() (string, []string) {
+    return "int", []string{
+      "_go_return_ := int(_cgo_return_)",
+    }
+  },
   "int": func() (string, []string) {
     return "int", []string{
       "_go_return_ := int(_cgo_return_)",
@@ -104,8 +109,13 @@ var RETURN_MAPPINGS = map[string]ReturnMapFunc{
       "_go_return_ := unsafe.Pointer(_cgo_return_)",
     }
   },
+  "const void *": func() (string, []string) {
+    return "unsafe.Pointer", []string{
+      "_go_return_ := unsafe.Pointer(_cgo_return_)",
+    }
+  },
 
-  // strings TODO maybe some need to be free, some doesn't
+  // strings XXX maybe some need to be free, some doesn't
   "const char *": func() (string, []string) {
     return "string", []string{
       "_go_return_ := C.GoString(_cgo_return_)",
@@ -136,6 +146,9 @@ var RETURN_MAPPINGS = map[string]ReturnMapFunc{
 type ReturnParamMapFunc func(name string) (mappedType, cType, returnExprs string)
 
 var RETURN_PARAM_MAPPINGS = map[string]ReturnParamMapFunc{
+  "unsigned short *": func(name string) (string, string, string) {
+    return "uint", "C.ushort", fmt.Sprintf("uint(_c_%s_)", name)
+  },
   "double *": func(name string) (string, string, string) {
     return "float64", "C.double", fmt.Sprintf("float64(_c_%s_)", name)
   },

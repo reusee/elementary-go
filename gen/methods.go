@@ -16,14 +16,20 @@ func (self *Class) AddMethod(fun *CFunc, prefix string) {
 func (self *Generator) collectGeneralMethods() {
   for _, fun := range self.CFuncs {
     if DISCARD_METHOD_FUNCS.Has(fun.Name) { continue }
-    for _, prefix := range []string{"elm_object_", "evas_object_"} {
-      if strings.HasPrefix(fun.Name, prefix) && len(fun.ParamTypes) > 0 && fun.ParamTypes[0] == "Evas_Object *" {
+    process := func(prefix string, receiver string) {
+      if strings.HasPrefix(fun.Name, prefix) && len(fun.ParamTypes) > 0 && fun.ParamTypes[0] == receiver {
         for _, class := range self.Classes {
           class.AddMethod(fun, prefix)
         }
         fun.Exported = true
       }
     }
+    process("elm_object_", "Evas_Object *")
+    process("elm_object_", "const Evas_Object *")
+    process("evas_object_", "Evas_Object *")
+    process("evas_object_", "const Evas_Object *")
+    process("elm_object_", "Elm_Object_Item *")
+    process("elm_object_", "const Elm_Object_Item *")
   }
 }
 
@@ -33,10 +39,16 @@ func (self *Generator) collectClassMethods() {
     prefix = prefix[:len(prefix) - len("add")]
     for _, fun := range self.CFuncs {
       if DISCARD_METHOD_FUNCS.Has(fun.Name) { continue }
-      if strings.HasPrefix(fun.Name, prefix) && len(fun.ParamTypes) > 0 && fun.ParamTypes[0] == "Evas_Object *" {
-        class.AddMethod(fun, prefix)
-        fun.Exported = true
+      process := func(receiver string) {
+        if strings.HasPrefix(fun.Name, prefix) && len(fun.ParamTypes) > 0 && fun.ParamTypes[0] == receiver {
+          class.AddMethod(fun, prefix)
+          fun.Exported = true
+        }
       }
+      process("Evas_Object *")
+      process("const Evas_Object *")
+      process("Elm_Object_Item *")
+      process("const Elm_Object_Item *")
     }
   }
 }

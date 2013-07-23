@@ -81,6 +81,7 @@ func convertToCgoType(t string) string {
   t = strings.Replace(t, "const ", "", -1)
   inModule := false
   for _, m := range C_MODULES {
+    m = m[:len(m) - 1]
     if strings.HasPrefix(strings.ToLower(t), m) {
       inModule = true
       break
