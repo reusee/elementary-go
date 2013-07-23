@@ -36,3 +36,17 @@ func ShutDown() int {
 func Exit() {
   C.elm_exit()
 }
+
+func ConvertAndFreeCString(cstr *C.char) string {
+  goStr := C.GoString(cstr)
+  C.free(unsafe.Pointer(cstr))
+  return goStr
+}
+
+func ConvertStringSliceToC(ss []string) **C.char {
+  cstrs := make([]*C.char, len(ss))
+  for i := 0; i < len(ss); i++ {
+    cstrs[i] = C.CString(ss[i])
+  }
+  return &cstrs[0]
+}

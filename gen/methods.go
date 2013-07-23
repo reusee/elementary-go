@@ -6,21 +6,20 @@ import (
   "os"
 )
 
+func (self *Class) AddMethod(fun *CFunc, prefix string) {
+  name := convertMethodName(fun.Name, prefix)
+  if method := makeGoMethod(fun, self, name); method != nil {
+    self.Methods = append(self.Methods, method)
+  }
+}
+
 func (self *Generator) collectGeneralMethods() {
   for _, fun := range self.CFuncs {
-    if _, has := DISCARD_METHOD_FUNCS[fun.Name]; has { continue }
+    if DISCARD_METHOD_FUNCS.Has(fun.Name) { continue }
     for _, prefix := range []string{"elm_object_", "evas_object_"} {
       if strings.HasPrefix(fun.Name, prefix) && len(fun.ParamTypes) > 0 && fun.ParamTypes[0] == "Evas_Object *" {
-        name := convertMethodName(fun.Name, prefix)
         for _, class := range self.Classes {
-          if method := makeGoMethod(fun, class, name); method != nil {
-            for _, m := range class.Methods {
-              if m.Name == method.Name {
-                log.Fatalf("name collision %s", m.Name)
-              }
-            }
-            class.Methods = append(class.Methods, method)
-          }
+          class.AddMethod(fun, prefix)
         }
         fun.Exported = true
       }
@@ -33,17 +32,10 @@ func (self *Generator) collectClassMethods() {
     prefix := class.CConstructor.Name
     prefix = prefix[:len(prefix) - len("add")]
     for _, fun := range self.CFuncs {
-      if strings.HasPrefix(fun.Name, prefix) {
-        p("%s\n", fun.Name)
-        name := convertMethodName(fun.Name, prefix)
-        if method := makeGoMethod(fun, class, name); method != nil {
-          for _, m := range class.Methods {
-            if m.Name == method.Name {
-              log.Fatalf("name collision %s", m.Name)
-            }
-          }
-          class.Methods = append(class.Methods, method)
-        }
+      if DISCARD_METHOD_FUNCS.Has(fun.Name) { continue }
+      if strings.HasPrefix(fun.Name, prefix) && len(fun.ParamTypes) > 0 && fun.ParamTypes[0] == "Evas_Object *" {
+        class.AddMethod(fun, prefix)
+        fun.Exported = true
       }
     }
   }
@@ -63,6 +55,22 @@ import (
 
 `))
   for _, class := range self.Classes {
+    generatedMethods := make(map[string]*BridgeFunc)
+    for _, method := range class.Methods {
+      if gm, has := generatedMethods[method.Name]; has {
+        if modulePrefered(gm.CFunc.Module, method.CFunc.Module) {
+          module := method.CFunc.Module
+          module = strings.ToUpper(module[:len(module) - 1])
+          method.Name = module + method.Name
+        } else {
+          module := gm.CFunc.Module
+          module = strings.ToUpper(module[:len(module) - 1])
+          gm.Name = module + gm.Name
+        }
+        //log.Fatalf("method name collision %s %s %s", class.Name, gm.CFunc.Name, method.CFunc.Name)
+      }
+      generatedMethods[method.Name] = method
+    }
     for _, method := range class.Methods {
       outputFile.Write([]byte(method.Gen()))
       outputFile.Write([]byte("\n"))
@@ -84,20 +92,28 @@ func makeGoMethod(fun *CFunc, class *Class, name string) *BridgeFunc {
   gofunc.Receiver = "*" + class.Name
   gofunc.Name = name
   gofunc.CgoArguments = append(gofunc.CgoArguments, "self.obj")
-  for i, paramName := range fun.ParamNames[1:] {
-    paramType := fun.ParamTypes[i + 1]
-    if strings.HasSuffix(paramType, "_Cb") || paramName == "cb" { // does not support callback type
-      return nil
+  if len(fun.ParamNames) > 1 {
+    for i, paramName := range fun.ParamNames[1:] {
+      paramType := fun.ParamTypes[i + 1]
+      if strings.HasSuffix(paramType, "_Cb") || paramName == "cb" { // does not support callback type
+        return nil
+      }
+      if NOT_SUPPORTED_TYPES.Has(paramType) {
+        return nil
+      }
+      if _, has := RETURN_PARAM_MAPPINGS[paramType]; (strings.HasSuffix(fun.Name, "_get") || FUNCS_WITH_RETURN_PARAM.Has(fun.Name)) && has { // return params
+        gofunc.ConvertReturnParam(paramName, paramType)
+      } else {
+        gofunc.ConvertParam(paramName, paramType)
+      }
     }
-    if paramType == "va_list" { // does not support va_list
-      return nil
-    }
-    gofunc.ConvertParam(paramName, paramType)
+  }
+  if NOT_SUPPORTED_TYPES.Has(fun.ReturnType) {
+    return nil
   }
   if fun.ReturnType != "void" {
     gofunc.ConvertReturnType(fun.ReturnType)
   }
   gofunc.CgoFunc = fun.Name
-  gofunc.ReturnExpression = "_go_return_"
   return gofunc
 }

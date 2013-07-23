@@ -37,6 +37,11 @@ var PARAM_MAPPINGS = map[string]ParamMapFunc{
       fmt.Sprintf("defer C.free(unsafe.Pointer(_c_%s))", name),
     }
   },
+  "const char *[]": func(name string) (string, string, []string) {
+    return "_c_" + name, "[]string", []string{
+      fmt.Sprintf("_c_%s := ConvertStringSliceToC(%s)", name, name),
+    }
+  },
 
   // numeric types
   "short": func(name string) (string, string, []string) {
@@ -76,29 +81,74 @@ var PARAM_MAPPINGS = map[string]ParamMapFunc{
 type ReturnMapFunc func() (mappedType string, helperCodes []string)
 
 var RETURN_MAPPINGS = map[string]ReturnMapFunc{
+  // numerics
+  "int": func() (string, []string) {
+    return "int", []string{
+      "_go_return_ := int(_cgo_return_)",
+    }
+  },
+  "unsigned int": func() (string, []string) {
+    return "uint", []string{
+      "_go_return_ := uint(_cgo_return_)",
+    }
+  },
+  "double": func() (string, []string) {
+    return "float64", []string{
+      "_go_return_ := float64(_cgo_return_)",
+    }
+  },
+
+  // void pointer
   "void *": func() (string, []string) {
     return "unsafe.Pointer", []string{
       "_go_return_ := unsafe.Pointer(_cgo_return_)",
     }
   },
-  "Eina_Bool": func() (string, []string) {
-    return "bool", []string{
-      "_go_return_ := _cgo_return_ == (C.Eina_Bool)(1)",
-    }
-  },
+
+  // strings TODO maybe some need to be free, some doesn't
   "const char *": func() (string, []string) {
     return "string", []string{
       "_go_return_ := C.GoString(_cgo_return_)",
     }
   },
+  "char *": func() (string, []string) {
+    return "string", []string{
+      "_go_return_ := C.GoString(_cgo_return_)",
+      "C.free(unsafe.Pointer(_cgo_return_))",
+    }
+  },
+
+  // eina types
+  "Eina_Bool": func() (string, []string) {
+    return "bool", []string{
+      "_go_return_ := _cgo_return_ == (C.Eina_Bool)(1)",
+    }
+  },
+
+  // evas types
   "Evas_Object *": func() (string, []string) {
     return "*EvasObject", []string{
       "_go_return_ := &EvasObject{_cgo_return_}",
     }
   },
-  "Evas_Object_Box_Option *": func() (string, []string) {
-    return "*C.Evas_Object_Box_Option", []string{
-      "_go_return_ := _cgo_return_",
-    }
+}
+
+type ReturnParamMapFunc func(name string) (mappedType, cType, returnExprs string)
+
+var RETURN_PARAM_MAPPINGS = map[string]ReturnParamMapFunc{
+  "double *": func(name string) (string, string, string) {
+    return "float64", "C.double", fmt.Sprintf("float64(_c_%s_)", name)
+  },
+  "int *": func(name string) (string, string, string) {
+    return "int", "C.int", fmt.Sprintf("int(_c_%s_)", name)
+  },
+  "unsigned int *": func(name string) (string, string, string) {
+    return "uint", "C.uint", fmt.Sprintf("uint(_c_%s_)", name)
+  },
+  "const char **": func(name string) (string, string, string) {
+    return "string", "*C.char", fmt.Sprintf("C.GoString(_c_%s_)", name)
+  },
+  "char **": func(name string) (string, string, string) {
+    return "string", "*C.char", fmt.Sprintf("ConvertAndFreeCString(_c_%s_)", name)
   },
 }

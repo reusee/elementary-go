@@ -16,6 +16,12 @@ func (self *Icon) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
 }
 
+func (self *Icon) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
+}
+
 func (self *Icon) LayerSet(l int) () {
   _c_l := C.short(l)
   C.evas_object_layer_set(self.obj, _c_l)
@@ -168,6 +174,11 @@ func (self *Icon) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Icon) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Icon) RenderOpSet(op C.Evas_Render_Op) () {
@@ -1022,6 +1033,29 @@ func (self *Icon) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Icon) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_icon_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Icon) ThumbSet(file string, group string) () {
+  _c_file := C.CString(file)
+  _c_group := C.CString(group)
+  C.elm_icon_thumb_set(self.obj, _c_file, _c_group)
+}
+
+func (self *Icon) StandardSet(name string) (bool) {
+  _c_name := C.CString(name)
+  _cgo_return_ := C.elm_icon_standard_set(self.obj, _c_name)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Icon) OrderLookupSet(order C.Elm_Icon_Lookup_Order) () {
+  C.elm_icon_order_lookup_set(self.obj, order)
+}
+
 func (self *Scroller) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -1030,6 +1064,12 @@ func (self *Scroller) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Scroller) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Scroller) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Scroller) LayerSet(l int) () {
@@ -1110,7 +1150,7 @@ func (self *Scroller) RepeatEventsSet(repeat bool) () {
   C.evas_object_repeat_events_set(self.obj, _c_repeat)
 }
 
-func (self *Scroller) PropagateEventsSet(prop bool) () {
+func (self *Scroller) EVASPropagateEventsSet(prop bool) () {
   _c_prop := (C.Eina_Bool)(0)
   if prop { _c_prop = (C.Eina_Bool)(1) }
   C.evas_object_propagate_events_set(self.obj, _c_prop)
@@ -1184,6 +1224,11 @@ func (self *Scroller) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Scroller) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Scroller) RenderOpSet(op C.Evas_Render_Op) () {
@@ -2038,6 +2083,74 @@ func (self *Scroller) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Scroller) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_scroller_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Scroller) ContentMinLimit(w bool, h bool) () {
+  _c_w := (C.Eina_Bool)(0)
+  if w { _c_w = (C.Eina_Bool)(1) }
+  _c_h := (C.Eina_Bool)(0)
+  if h { _c_h = (C.Eina_Bool)(1) }
+  C.elm_scroller_content_min_limit(self.obj, _c_w, _c_h)
+}
+
+func (self *Scroller) RegionShow(x C.Evas_Coord, y C.Evas_Coord, w C.Evas_Coord, h C.Evas_Coord) () {
+  C.elm_scroller_region_show(self.obj, x, y, w, h)
+}
+
+func (self *Scroller) PolicySet(policy_h C.Elm_Scroller_Policy, policy_v C.Elm_Scroller_Policy) () {
+  C.elm_scroller_policy_set(self.obj, policy_h, policy_v)
+}
+
+func (self *Scroller) BounceSet(h_bounce bool, v_bounce bool) () {
+  _c_h_bounce := (C.Eina_Bool)(0)
+  if h_bounce { _c_h_bounce = (C.Eina_Bool)(1) }
+  _c_v_bounce := (C.Eina_Bool)(0)
+  if v_bounce { _c_v_bounce = (C.Eina_Bool)(1) }
+  C.elm_scroller_bounce_set(self.obj, _c_h_bounce, _c_v_bounce)
+}
+
+func (self *Scroller) PageRelativeSet(h_pagerel float64, v_pagerel float64) () {
+  _c_h_pagerel := C.double(h_pagerel)
+  _c_v_pagerel := C.double(v_pagerel)
+  C.elm_scroller_page_relative_set(self.obj, _c_h_pagerel, _c_v_pagerel)
+}
+
+func (self *Scroller) PageSizeSet(h_pagesize C.Evas_Coord, v_pagesize C.Evas_Coord) () {
+  C.elm_scroller_page_size_set(self.obj, h_pagesize, v_pagesize)
+}
+
+func (self *Scroller) PageShow(h_pagenumber int, v_pagenumber int) () {
+  _c_h_pagenumber := C.int(h_pagenumber)
+  _c_v_pagenumber := C.int(v_pagenumber)
+  C.elm_scroller_page_show(self.obj, _c_h_pagenumber, _c_v_pagenumber)
+}
+
+func (self *Scroller) PageBringIn(h_pagenumber int, v_pagenumber int) () {
+  _c_h_pagenumber := C.int(h_pagenumber)
+  _c_v_pagenumber := C.int(v_pagenumber)
+  C.elm_scroller_page_bring_in(self.obj, _c_h_pagenumber, _c_v_pagenumber)
+}
+
+func (self *Scroller) RegionBringIn(x C.Evas_Coord, y C.Evas_Coord, w C.Evas_Coord, h C.Evas_Coord) () {
+  C.elm_scroller_region_bring_in(self.obj, x, y, w, h)
+}
+
+func (self *Scroller) PropagateEventsSet(propagation bool) () {
+  _c_propagation := (C.Eina_Bool)(0)
+  if propagation { _c_propagation = (C.Eina_Bool)(1) }
+  C.elm_scroller_propagate_events_set(self.obj, _c_propagation)
+}
+
+func (self *Scroller) GravitySet(x float64, y float64) () {
+  _c_x := C.double(x)
+  _c_y := C.double(y)
+  C.elm_scroller_gravity_set(self.obj, _c_x, _c_y)
+}
+
 func (self *Entry) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -2046,6 +2159,12 @@ func (self *Entry) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Entry) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Entry) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Entry) LayerSet(l int) () {
@@ -2200,6 +2319,11 @@ func (self *Entry) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Entry) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Entry) RenderOpSet(op C.Evas_Render_Op) () {
@@ -3054,6 +3178,280 @@ func (self *Entry) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Entry) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_entry_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Entry) TextStyleUserPush(style string) () {
+  _c_style := C.CString(style)
+  C.elm_entry_text_style_user_push(self.obj, _c_style)
+}
+
+func (self *Entry) TextStyleUserPop() () {
+  C.elm_entry_text_style_user_pop(self.obj)
+}
+
+func (self *Entry) SingleLineSet(single_line bool) () {
+  _c_single_line := (C.Eina_Bool)(0)
+  if single_line { _c_single_line = (C.Eina_Bool)(1) }
+  C.elm_entry_single_line_set(self.obj, _c_single_line)
+}
+
+func (self *Entry) PasswordSet(password bool) () {
+  _c_password := (C.Eina_Bool)(0)
+  if password { _c_password = (C.Eina_Bool)(1) }
+  C.elm_entry_password_set(self.obj, _c_password)
+}
+
+func (self *Entry) EntrySet(entry string) () {
+  _c_entry := C.CString(entry)
+  C.elm_entry_entry_set(self.obj, _c_entry)
+}
+
+func (self *Entry) EntryAppend(entry string) () {
+  _c_entry := C.CString(entry)
+  C.elm_entry_entry_append(self.obj, _c_entry)
+}
+
+func (self *Entry) TextblockGet() (*EvasObject) {
+  _cgo_return_ := C.elm_entry_textblock_get(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Entry) CalcForce() () {
+  C.elm_entry_calc_force(self.obj)
+}
+
+func (self *Entry) EntryInsert(entry string) () {
+  _c_entry := C.CString(entry)
+  C.elm_entry_entry_insert(self.obj, _c_entry)
+}
+
+func (self *Entry) LineWrapSet(wrap C.Elm_Wrap_Type) () {
+  C.elm_entry_line_wrap_set(self.obj, wrap)
+}
+
+func (self *Entry) EditableSet(editable bool) () {
+  _c_editable := (C.Eina_Bool)(0)
+  if editable { _c_editable = (C.Eina_Bool)(1) }
+  C.elm_entry_editable_set(self.obj, _c_editable)
+}
+
+func (self *Entry) SelectNone() () {
+  C.elm_entry_select_none(self.obj)
+}
+
+func (self *Entry) SelectAll() () {
+  C.elm_entry_select_all(self.obj)
+}
+
+func (self *Entry) CursorNext() (bool) {
+  _cgo_return_ := C.elm_entry_cursor_next(self.obj)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Entry) CursorPrev() (bool) {
+  _cgo_return_ := C.elm_entry_cursor_prev(self.obj)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Entry) CursorUp() (bool) {
+  _cgo_return_ := C.elm_entry_cursor_up(self.obj)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Entry) CursorDown() (bool) {
+  _cgo_return_ := C.elm_entry_cursor_down(self.obj)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Entry) CursorBeginSet() () {
+  C.elm_entry_cursor_begin_set(self.obj)
+}
+
+func (self *Entry) CursorEndSet() () {
+  C.elm_entry_cursor_end_set(self.obj)
+}
+
+func (self *Entry) CursorLineBeginSet() () {
+  C.elm_entry_cursor_line_begin_set(self.obj)
+}
+
+func (self *Entry) CursorLineEndSet() () {
+  C.elm_entry_cursor_line_end_set(self.obj)
+}
+
+func (self *Entry) CursorSelectionBegin() () {
+  C.elm_entry_cursor_selection_begin(self.obj)
+}
+
+func (self *Entry) CursorSelectionEnd() () {
+  C.elm_entry_cursor_selection_end(self.obj)
+}
+
+func (self *Entry) CursorPosSet(pos int) () {
+  _c_pos := C.int(pos)
+  C.elm_entry_cursor_pos_set(self.obj, _c_pos)
+}
+
+func (self *Entry) SelectionCut() () {
+  C.elm_entry_selection_cut(self.obj)
+}
+
+func (self *Entry) SelectionCopy() () {
+  C.elm_entry_selection_copy(self.obj)
+}
+
+func (self *Entry) SelectionPaste() () {
+  C.elm_entry_selection_paste(self.obj)
+}
+
+func (self *Entry) ContextMenuClear() () {
+  C.elm_entry_context_menu_clear(self.obj)
+}
+
+func (self *Entry) ContextMenuDisabledSet(disabled bool) () {
+  _c_disabled := (C.Eina_Bool)(0)
+  if disabled { _c_disabled = (C.Eina_Bool)(1) }
+  C.elm_entry_context_menu_disabled_set(self.obj, _c_disabled)
+}
+
+func (self *Entry) FileSet(file string, format C.Elm_Text_Format) (bool) {
+  _c_file := C.CString(file)
+  _cgo_return_ := C.elm_entry_file_set(self.obj, _c_file, format)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Entry) FileSave() () {
+  C.elm_entry_file_save(self.obj)
+}
+
+func (self *Entry) AutosaveSet(autosave bool) () {
+  _c_autosave := (C.Eina_Bool)(0)
+  if autosave { _c_autosave = (C.Eina_Bool)(1) }
+  C.elm_entry_autosave_set(self.obj, _c_autosave)
+}
+
+func (self *Entry) ScrollableSet(scroll bool) () {
+  _c_scroll := (C.Eina_Bool)(0)
+  if scroll { _c_scroll = (C.Eina_Bool)(1) }
+  C.elm_entry_scrollable_set(self.obj, _c_scroll)
+}
+
+func (self *Entry) IconVisibleSet(setting bool) () {
+  _c_setting := (C.Eina_Bool)(0)
+  if setting { _c_setting = (C.Eina_Bool)(1) }
+  C.elm_entry_icon_visible_set(self.obj, _c_setting)
+}
+
+func (self *Entry) EndVisibleSet(setting bool) () {
+  _c_setting := (C.Eina_Bool)(0)
+  if setting { _c_setting = (C.Eina_Bool)(1) }
+  C.elm_entry_end_visible_set(self.obj, _c_setting)
+}
+
+func (self *Entry) ScrollbarPolicySet(h C.Elm_Scroller_Policy, v C.Elm_Scroller_Policy) () {
+  C.elm_entry_scrollbar_policy_set(self.obj, h, v)
+}
+
+func (self *Entry) BounceSet(h_bounce bool, v_bounce bool) () {
+  _c_h_bounce := (C.Eina_Bool)(0)
+  if h_bounce { _c_h_bounce = (C.Eina_Bool)(1) }
+  _c_v_bounce := (C.Eina_Bool)(0)
+  if v_bounce { _c_v_bounce = (C.Eina_Bool)(1) }
+  C.elm_entry_bounce_set(self.obj, _c_h_bounce, _c_v_bounce)
+}
+
+func (self *Entry) InputPanelLayoutSet(layout C.Elm_Input_Panel_Layout) () {
+  C.elm_entry_input_panel_layout_set(self.obj, layout)
+}
+
+func (self *Entry) AutocapitalTypeSet(autocapital_type C.Elm_Autocapital_Type) () {
+  C.elm_entry_autocapital_type_set(self.obj, autocapital_type)
+}
+
+func (self *Entry) InputPanelEnabledSet(enabled bool) () {
+  _c_enabled := (C.Eina_Bool)(0)
+  if enabled { _c_enabled = (C.Eina_Bool)(1) }
+  C.elm_entry_input_panel_enabled_set(self.obj, _c_enabled)
+}
+
+func (self *Entry) InputPanelShow() () {
+  C.elm_entry_input_panel_show(self.obj)
+}
+
+func (self *Entry) InputPanelHide() () {
+  C.elm_entry_input_panel_hide(self.obj)
+}
+
+func (self *Entry) InputPanelLanguageSet(lang C.Elm_Input_Panel_Lang) () {
+  C.elm_entry_input_panel_language_set(self.obj, lang)
+}
+
+func (self *Entry) InputPanelImdataSet(data unsafe.Pointer, len int) () {
+  _c_len := C.int(len)
+  C.elm_entry_input_panel_imdata_set(self.obj, data, _c_len)
+}
+
+func (self *Entry) InputPanelReturnKeyTypeSet(return_key_type C.Elm_Input_Panel_Return_Key_Type) () {
+  C.elm_entry_input_panel_return_key_type_set(self.obj, return_key_type)
+}
+
+func (self *Entry) InputPanelReturnKeyDisabledSet(disabled bool) () {
+  _c_disabled := (C.Eina_Bool)(0)
+  if disabled { _c_disabled = (C.Eina_Bool)(1) }
+  C.elm_entry_input_panel_return_key_disabled_set(self.obj, _c_disabled)
+}
+
+func (self *Entry) InputPanelReturnKeyAutoenabledSet(enabled bool) () {
+  _c_enabled := (C.Eina_Bool)(0)
+  if enabled { _c_enabled = (C.Eina_Bool)(1) }
+  C.elm_entry_input_panel_return_key_autoenabled_set(self.obj, _c_enabled)
+}
+
+func (self *Entry) ImfContextReset() () {
+  C.elm_entry_imf_context_reset(self.obj)
+}
+
+func (self *Entry) PredictionAllowSet(prediction bool) () {
+  _c_prediction := (C.Eina_Bool)(0)
+  if prediction { _c_prediction = (C.Eina_Bool)(1) }
+  C.elm_entry_prediction_allow_set(self.obj, _c_prediction)
+}
+
+func (self *Entry) ImfContextGet() (unsafe.Pointer) {
+  _cgo_return_ := C.elm_entry_imf_context_get(self.obj)
+  _go_return_ := unsafe.Pointer(_cgo_return_)
+  return _go_return_
+}
+
+func (self *Entry) CnpModeSet(cnp_mode C.Elm_Cnp_Mode) () {
+  C.elm_entry_cnp_mode_set(self.obj, cnp_mode)
+}
+
+func (self *Entry) AnchorHoverParentSet(parent EvasObjectInterface) () {
+  var _c_parent *C.Evas_Object
+  if parent != nil { _c_parent = parent.GetObj() }
+  C.elm_entry_anchor_hover_parent_set(self.obj, _c_parent)
+}
+
+func (self *Entry) AnchorHoverStyleSet(style string) () {
+  _c_style := C.CString(style)
+  C.elm_entry_anchor_hover_style_set(self.obj, _c_style)
+}
+
+func (self *Entry) AnchorHoverEnd() () {
+  C.elm_entry_anchor_hover_end(self.obj)
+}
+
 func (self *List) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -3062,6 +3460,12 @@ func (self *List) ClipSet(clip EvasObjectInterface) () {
 
 func (self *List) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *List) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *List) LayerSet(l int) () {
@@ -3216,6 +3620,11 @@ func (self *List) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *List) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *List) RenderOpSet(op C.Evas_Render_Op) () {
@@ -4070,6 +4479,40 @@ func (self *List) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *List) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_list_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *List) Go() () {
+  C.elm_list_go(self.obj)
+}
+
+func (self *List) MultiSelectSet(multi bool) () {
+  _c_multi := (C.Eina_Bool)(0)
+  if multi { _c_multi = (C.Eina_Bool)(1) }
+  C.elm_list_multi_select_set(self.obj, _c_multi)
+}
+
+func (self *List) ModeSet(mode C.Elm_List_Mode) () {
+  C.elm_list_mode_set(self.obj, mode)
+}
+
+func (self *List) HorizontalSet(horizontal bool) () {
+  _c_horizontal := (C.Eina_Bool)(0)
+  if horizontal { _c_horizontal = (C.Eina_Bool)(1) }
+  C.elm_list_horizontal_set(self.obj, _c_horizontal)
+}
+
+func (self *List) SelectModeSet(mode C.Elm_Object_Select_Mode) () {
+  C.elm_list_select_mode_set(self.obj, mode)
+}
+
+func (self *List) Clear() () {
+  C.elm_list_clear(self.obj)
+}
+
 func (self *Ctxpopup) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -4078,6 +4521,12 @@ func (self *Ctxpopup) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Ctxpopup) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Ctxpopup) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Ctxpopup) LayerSet(l int) () {
@@ -4232,6 +4681,11 @@ func (self *Ctxpopup) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Ctxpopup) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Ctxpopup) RenderOpSet(op C.Evas_Render_Op) () {
@@ -5086,6 +5540,40 @@ func (self *Ctxpopup) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Ctxpopup) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_ctxpopup_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Ctxpopup) HoverParentSet(parent EvasObjectInterface) () {
+  var _c_parent *C.Evas_Object
+  if parent != nil { _c_parent = parent.GetObj() }
+  C.elm_ctxpopup_hover_parent_set(self.obj, _c_parent)
+}
+
+func (self *Ctxpopup) Clear() () {
+  C.elm_ctxpopup_clear(self.obj)
+}
+
+func (self *Ctxpopup) HorizontalSet(horizontal bool) () {
+  _c_horizontal := (C.Eina_Bool)(0)
+  if horizontal { _c_horizontal = (C.Eina_Bool)(1) }
+  C.elm_ctxpopup_horizontal_set(self.obj, _c_horizontal)
+}
+
+func (self *Ctxpopup) DirectionPrioritySet(first C.Elm_Ctxpopup_Direction, second C.Elm_Ctxpopup_Direction, third C.Elm_Ctxpopup_Direction, fourth C.Elm_Ctxpopup_Direction) () {
+  C.elm_ctxpopup_direction_priority_set(self.obj, first, second, third, fourth)
+}
+
+func (self *Ctxpopup) DirectionPriorityGet(first *C.Elm_Ctxpopup_Direction, second *C.Elm_Ctxpopup_Direction, third *C.Elm_Ctxpopup_Direction, fourth *C.Elm_Ctxpopup_Direction) () {
+  C.elm_ctxpopup_direction_priority_get(self.obj, first, second, third, fourth)
+}
+
+func (self *Ctxpopup) Dismiss() () {
+  C.elm_ctxpopup_dismiss(self.obj)
+}
+
 func (self *Dayselector) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -5094,6 +5582,12 @@ func (self *Dayselector) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Dayselector) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Dayselector) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Dayselector) LayerSet(l int) () {
@@ -5248,6 +5742,11 @@ func (self *Dayselector) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Dayselector) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Dayselector) RenderOpSet(op C.Evas_Render_Op) () {
@@ -6102,6 +6601,31 @@ func (self *Dayselector) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Dayselector) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_dayselector_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Dayselector) DaySelectedSet(day C.Elm_Dayselector_Day, selected bool) () {
+  _c_selected := (C.Eina_Bool)(0)
+  if selected { _c_selected = (C.Eina_Bool)(1) }
+  C.elm_dayselector_day_selected_set(self.obj, day, _c_selected)
+}
+
+func (self *Dayselector) WeekStartSet(day C.Elm_Dayselector_Day) () {
+  C.elm_dayselector_week_start_set(self.obj, day)
+}
+
+func (self *Dayselector) WeekendStartSet(day C.Elm_Dayselector_Day) () {
+  C.elm_dayselector_weekend_start_set(self.obj, day)
+}
+
+func (self *Dayselector) WeekendLengthSet(length uint) () {
+  _c_length := C.uint(length)
+  C.elm_dayselector_weekend_length_set(self.obj, _c_length)
+}
+
 func (self *FileselectorButton) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -6110,6 +6634,12 @@ func (self *FileselectorButton) ClipSet(clip EvasObjectInterface) () {
 
 func (self *FileselectorButton) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *FileselectorButton) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *FileselectorButton) LayerSet(l int) () {
@@ -6264,6 +6794,11 @@ func (self *FileselectorButton) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *FileselectorButton) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *FileselectorButton) RenderOpSet(op C.Evas_Render_Op) () {
@@ -7118,6 +7653,50 @@ func (self *FileselectorButton) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *FileselectorButton) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_fileselector_button_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *FileselectorButton) WindowTitleSet(title string) () {
+  _c_title := C.CString(title)
+  C.elm_fileselector_button_window_title_set(self.obj, _c_title)
+}
+
+func (self *FileselectorButton) WindowSizeSet(width C.Evas_Coord, height C.Evas_Coord) () {
+  C.elm_fileselector_button_window_size_set(self.obj, width, height)
+}
+
+func (self *FileselectorButton) PathSet(path string) () {
+  _c_path := C.CString(path)
+  C.elm_fileselector_button_path_set(self.obj, _c_path)
+}
+
+func (self *FileselectorButton) ExpandableSet(value bool) () {
+  _c_value := (C.Eina_Bool)(0)
+  if value { _c_value = (C.Eina_Bool)(1) }
+  C.elm_fileselector_button_expandable_set(self.obj, _c_value)
+}
+
+func (self *FileselectorButton) FolderOnlySet(value bool) () {
+  _c_value := (C.Eina_Bool)(0)
+  if value { _c_value = (C.Eina_Bool)(1) }
+  C.elm_fileselector_button_folder_only_set(self.obj, _c_value)
+}
+
+func (self *FileselectorButton) IsSaveSet(value bool) () {
+  _c_value := (C.Eina_Bool)(0)
+  if value { _c_value = (C.Eina_Bool)(1) }
+  C.elm_fileselector_button_is_save_set(self.obj, _c_value)
+}
+
+func (self *FileselectorButton) InwinModeSet(value bool) () {
+  _c_value := (C.Eina_Bool)(0)
+  if value { _c_value = (C.Eina_Bool)(1) }
+  C.elm_fileselector_button_inwin_mode_set(self.obj, _c_value)
+}
+
 func (self *FileselectorEntry) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -7126,6 +7705,12 @@ func (self *FileselectorEntry) ClipSet(clip EvasObjectInterface) () {
 
 func (self *FileselectorEntry) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *FileselectorEntry) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *FileselectorEntry) LayerSet(l int) () {
@@ -7280,6 +7865,11 @@ func (self *FileselectorEntry) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *FileselectorEntry) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *FileselectorEntry) RenderOpSet(op C.Evas_Render_Op) () {
@@ -8134,6 +8724,55 @@ func (self *FileselectorEntry) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *FileselectorEntry) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_fileselector_entry_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *FileselectorEntry) WindowTitleSet(title string) () {
+  _c_title := C.CString(title)
+  C.elm_fileselector_entry_window_title_set(self.obj, _c_title)
+}
+
+func (self *FileselectorEntry) WindowSizeSet(width C.Evas_Coord, height C.Evas_Coord) () {
+  C.elm_fileselector_entry_window_size_set(self.obj, width, height)
+}
+
+func (self *FileselectorEntry) PathSet(path string) () {
+  _c_path := C.CString(path)
+  C.elm_fileselector_entry_path_set(self.obj, _c_path)
+}
+
+func (self *FileselectorEntry) ExpandableSet(value bool) () {
+  _c_value := (C.Eina_Bool)(0)
+  if value { _c_value = (C.Eina_Bool)(1) }
+  C.elm_fileselector_entry_expandable_set(self.obj, _c_value)
+}
+
+func (self *FileselectorEntry) FolderOnlySet(value bool) () {
+  _c_value := (C.Eina_Bool)(0)
+  if value { _c_value = (C.Eina_Bool)(1) }
+  C.elm_fileselector_entry_folder_only_set(self.obj, _c_value)
+}
+
+func (self *FileselectorEntry) IsSaveSet(value bool) () {
+  _c_value := (C.Eina_Bool)(0)
+  if value { _c_value = (C.Eina_Bool)(1) }
+  C.elm_fileselector_entry_is_save_set(self.obj, _c_value)
+}
+
+func (self *FileselectorEntry) InwinModeSet(value bool) () {
+  _c_value := (C.Eina_Bool)(0)
+  if value { _c_value = (C.Eina_Bool)(1) }
+  C.elm_fileselector_entry_inwin_mode_set(self.obj, _c_value)
+}
+
+func (self *FileselectorEntry) SelectedSet(path string) () {
+  _c_path := C.CString(path)
+  C.elm_fileselector_entry_selected_set(self.obj, _c_path)
+}
+
 func (self *Fileselector) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -8142,6 +8781,12 @@ func (self *Fileselector) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Fileselector) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Fileselector) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Fileselector) LayerSet(l int) () {
@@ -8296,6 +8941,11 @@ func (self *Fileselector) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Fileselector) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Fileselector) RenderOpSet(op C.Evas_Render_Op) () {
@@ -9150,6 +9800,145 @@ func (self *Fileselector) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Fileselector) ButtonAdd() (*EvasObject) {
+  _cgo_return_ := C.elm_fileselector_button_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Fileselector) ButtonWindowTitleSet(title string) () {
+  _c_title := C.CString(title)
+  C.elm_fileselector_button_window_title_set(self.obj, _c_title)
+}
+
+func (self *Fileselector) ButtonWindowSizeSet(width C.Evas_Coord, height C.Evas_Coord) () {
+  C.elm_fileselector_button_window_size_set(self.obj, width, height)
+}
+
+func (self *Fileselector) ButtonPathSet(path string) () {
+  _c_path := C.CString(path)
+  C.elm_fileselector_button_path_set(self.obj, _c_path)
+}
+
+func (self *Fileselector) ButtonExpandableSet(value bool) () {
+  _c_value := (C.Eina_Bool)(0)
+  if value { _c_value = (C.Eina_Bool)(1) }
+  C.elm_fileselector_button_expandable_set(self.obj, _c_value)
+}
+
+func (self *Fileselector) ButtonFolderOnlySet(value bool) () {
+  _c_value := (C.Eina_Bool)(0)
+  if value { _c_value = (C.Eina_Bool)(1) }
+  C.elm_fileselector_button_folder_only_set(self.obj, _c_value)
+}
+
+func (self *Fileselector) ButtonIsSaveSet(value bool) () {
+  _c_value := (C.Eina_Bool)(0)
+  if value { _c_value = (C.Eina_Bool)(1) }
+  C.elm_fileselector_button_is_save_set(self.obj, _c_value)
+}
+
+func (self *Fileselector) ButtonInwinModeSet(value bool) () {
+  _c_value := (C.Eina_Bool)(0)
+  if value { _c_value = (C.Eina_Bool)(1) }
+  C.elm_fileselector_button_inwin_mode_set(self.obj, _c_value)
+}
+
+func (self *Fileselector) EntryAdd() (*EvasObject) {
+  _cgo_return_ := C.elm_fileselector_entry_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Fileselector) EntryWindowTitleSet(title string) () {
+  _c_title := C.CString(title)
+  C.elm_fileselector_entry_window_title_set(self.obj, _c_title)
+}
+
+func (self *Fileselector) EntryWindowSizeSet(width C.Evas_Coord, height C.Evas_Coord) () {
+  C.elm_fileselector_entry_window_size_set(self.obj, width, height)
+}
+
+func (self *Fileselector) EntryPathSet(path string) () {
+  _c_path := C.CString(path)
+  C.elm_fileselector_entry_path_set(self.obj, _c_path)
+}
+
+func (self *Fileselector) EntryExpandableSet(value bool) () {
+  _c_value := (C.Eina_Bool)(0)
+  if value { _c_value = (C.Eina_Bool)(1) }
+  C.elm_fileselector_entry_expandable_set(self.obj, _c_value)
+}
+
+func (self *Fileselector) EntryFolderOnlySet(value bool) () {
+  _c_value := (C.Eina_Bool)(0)
+  if value { _c_value = (C.Eina_Bool)(1) }
+  C.elm_fileselector_entry_folder_only_set(self.obj, _c_value)
+}
+
+func (self *Fileselector) EntryIsSaveSet(value bool) () {
+  _c_value := (C.Eina_Bool)(0)
+  if value { _c_value = (C.Eina_Bool)(1) }
+  C.elm_fileselector_entry_is_save_set(self.obj, _c_value)
+}
+
+func (self *Fileselector) EntryInwinModeSet(value bool) () {
+  _c_value := (C.Eina_Bool)(0)
+  if value { _c_value = (C.Eina_Bool)(1) }
+  C.elm_fileselector_entry_inwin_mode_set(self.obj, _c_value)
+}
+
+func (self *Fileselector) EntrySelectedSet(path string) () {
+  _c_path := C.CString(path)
+  C.elm_fileselector_entry_selected_set(self.obj, _c_path)
+}
+
+func (self *Fileselector) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_fileselector_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Fileselector) IsSaveSet(is_save bool) () {
+  _c_is_save := (C.Eina_Bool)(0)
+  if is_save { _c_is_save = (C.Eina_Bool)(1) }
+  C.elm_fileselector_is_save_set(self.obj, _c_is_save)
+}
+
+func (self *Fileselector) FolderOnlySet(only bool) () {
+  _c_only := (C.Eina_Bool)(0)
+  if only { _c_only = (C.Eina_Bool)(1) }
+  C.elm_fileselector_folder_only_set(self.obj, _c_only)
+}
+
+func (self *Fileselector) ButtonsOkCancelSet(buttons bool) () {
+  _c_buttons := (C.Eina_Bool)(0)
+  if buttons { _c_buttons = (C.Eina_Bool)(1) }
+  C.elm_fileselector_buttons_ok_cancel_set(self.obj, _c_buttons)
+}
+
+func (self *Fileselector) ExpandableSet(expand bool) () {
+  _c_expand := (C.Eina_Bool)(0)
+  if expand { _c_expand = (C.Eina_Bool)(1) }
+  C.elm_fileselector_expandable_set(self.obj, _c_expand)
+}
+
+func (self *Fileselector) PathSet(path string) () {
+  _c_path := C.CString(path)
+  C.elm_fileselector_path_set(self.obj, _c_path)
+}
+
+func (self *Fileselector) SelectedSet(path string) (bool) {
+  _c_path := C.CString(path)
+  _cgo_return_ := C.elm_fileselector_selected_set(self.obj, _c_path)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Fileselector) ModeSet(mode C.Elm_Fileselector_Mode) () {
+  C.elm_fileselector_mode_set(self.obj, mode)
+}
+
 func (self *Hoversel) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -9158,6 +9947,12 @@ func (self *Hoversel) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Hoversel) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Hoversel) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Hoversel) LayerSet(l int) () {
@@ -9312,6 +10107,11 @@ func (self *Hoversel) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Hoversel) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Hoversel) RenderOpSet(op C.Evas_Render_Op) () {
@@ -10166,6 +10966,36 @@ func (self *Hoversel) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Hoversel) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_hoversel_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Hoversel) HorizontalSet(horizontal bool) () {
+  _c_horizontal := (C.Eina_Bool)(0)
+  if horizontal { _c_horizontal = (C.Eina_Bool)(1) }
+  C.elm_hoversel_horizontal_set(self.obj, _c_horizontal)
+}
+
+func (self *Hoversel) HoverParentSet(parent EvasObjectInterface) () {
+  var _c_parent *C.Evas_Object
+  if parent != nil { _c_parent = parent.GetObj() }
+  C.elm_hoversel_hover_parent_set(self.obj, _c_parent)
+}
+
+func (self *Hoversel) HoverBegin() () {
+  C.elm_hoversel_hover_begin(self.obj)
+}
+
+func (self *Hoversel) HoverEnd() () {
+  C.elm_hoversel_hover_end(self.obj)
+}
+
+func (self *Hoversel) Clear() () {
+  C.elm_hoversel_clear(self.obj)
+}
+
 func (self *Multibuttonentry) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -10174,6 +11004,12 @@ func (self *Multibuttonentry) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Multibuttonentry) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Multibuttonentry) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Multibuttonentry) LayerSet(l int) () {
@@ -10328,6 +11164,11 @@ func (self *Multibuttonentry) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Multibuttonentry) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Multibuttonentry) RenderOpSet(op C.Evas_Render_Op) () {
@@ -11182,6 +12023,28 @@ func (self *Multibuttonentry) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Multibuttonentry) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_multibuttonentry_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Multibuttonentry) ExpandedSet(expanded bool) () {
+  _c_expanded := (C.Eina_Bool)(0)
+  if expanded { _c_expanded = (C.Eina_Bool)(1) }
+  C.elm_multibuttonentry_expanded_set(self.obj, _c_expanded)
+}
+
+func (self *Multibuttonentry) Clear() () {
+  C.elm_multibuttonentry_clear(self.obj)
+}
+
+func (self *Multibuttonentry) EditableSet(editable bool) () {
+  _c_editable := (C.Eina_Bool)(0)
+  if editable { _c_editable = (C.Eina_Bool)(1) }
+  C.elm_multibuttonentry_editable_set(self.obj, _c_editable)
+}
+
 func (self *Naviframe) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -11190,6 +12053,12 @@ func (self *Naviframe) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Naviframe) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Naviframe) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Naviframe) LayerSet(l int) () {
@@ -11344,6 +12213,11 @@ func (self *Naviframe) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Naviframe) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Naviframe) RenderOpSet(op C.Evas_Render_Op) () {
@@ -12198,6 +13072,92 @@ func (self *Naviframe) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Naviframe) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_naviframe_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Naviframe) ItemPush(title_label string, prev_btn EvasObjectInterface, next_btn EvasObjectInterface, content EvasObjectInterface, item_style string) (*C.Elm_Object_Item) {
+  _c_title_label := C.CString(title_label)
+  var _c_prev_btn *C.Evas_Object
+  if prev_btn != nil { _c_prev_btn = prev_btn.GetObj() }
+  var _c_next_btn *C.Evas_Object
+  if next_btn != nil { _c_next_btn = next_btn.GetObj() }
+  var _c_content *C.Evas_Object
+  if content != nil { _c_content = content.GetObj() }
+  _c_item_style := C.CString(item_style)
+  _cgo_return_ := C.elm_naviframe_item_push(self.obj, _c_title_label, _c_prev_btn, _c_next_btn, _c_content, _c_item_style)
+  _go_return_ := _cgo_return_
+  return _go_return_
+}
+
+func (self *Naviframe) ItemInsertBefore(before *C.Elm_Object_Item, title_label string, prev_btn EvasObjectInterface, next_btn EvasObjectInterface, content EvasObjectInterface, item_style string) (*C.Elm_Object_Item) {
+  _c_title_label := C.CString(title_label)
+  var _c_prev_btn *C.Evas_Object
+  if prev_btn != nil { _c_prev_btn = prev_btn.GetObj() }
+  var _c_next_btn *C.Evas_Object
+  if next_btn != nil { _c_next_btn = next_btn.GetObj() }
+  var _c_content *C.Evas_Object
+  if content != nil { _c_content = content.GetObj() }
+  _c_item_style := C.CString(item_style)
+  _cgo_return_ := C.elm_naviframe_item_insert_before(self.obj, before, _c_title_label, _c_prev_btn, _c_next_btn, _c_content, _c_item_style)
+  _go_return_ := _cgo_return_
+  return _go_return_
+}
+
+func (self *Naviframe) ItemInsertAfter(after *C.Elm_Object_Item, title_label string, prev_btn EvasObjectInterface, next_btn EvasObjectInterface, content EvasObjectInterface, item_style string) (*C.Elm_Object_Item) {
+  _c_title_label := C.CString(title_label)
+  var _c_prev_btn *C.Evas_Object
+  if prev_btn != nil { _c_prev_btn = prev_btn.GetObj() }
+  var _c_next_btn *C.Evas_Object
+  if next_btn != nil { _c_next_btn = next_btn.GetObj() }
+  var _c_content *C.Evas_Object
+  if content != nil { _c_content = content.GetObj() }
+  _c_item_style := C.CString(item_style)
+  _cgo_return_ := C.elm_naviframe_item_insert_after(self.obj, after, _c_title_label, _c_prev_btn, _c_next_btn, _c_content, _c_item_style)
+  _go_return_ := _cgo_return_
+  return _go_return_
+}
+
+func (self *Naviframe) ItemPop() (*EvasObject) {
+  _cgo_return_ := C.elm_naviframe_item_pop(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Naviframe) ContentPreserveOnPopSet(preserve bool) () {
+  _c_preserve := (C.Eina_Bool)(0)
+  if preserve { _c_preserve = (C.Eina_Bool)(1) }
+  C.elm_naviframe_content_preserve_on_pop_set(self.obj, _c_preserve)
+}
+
+func (self *Naviframe) PrevBtnAutoPushedSet(auto_pushed bool) () {
+  _c_auto_pushed := (C.Eina_Bool)(0)
+  if auto_pushed { _c_auto_pushed = (C.Eina_Bool)(1) }
+  C.elm_naviframe_prev_btn_auto_pushed_set(self.obj, _c_auto_pushed)
+}
+
+func (self *Naviframe) EventEnabledSet(enabled bool) () {
+  _c_enabled := (C.Eina_Bool)(0)
+  if enabled { _c_enabled = (C.Eina_Bool)(1) }
+  C.elm_naviframe_event_enabled_set(self.obj, _c_enabled)
+}
+
+func (self *Naviframe) ItemSimplePush(content EvasObjectInterface) (*C.Elm_Object_Item) {
+  var _c_content *C.Evas_Object
+  if content != nil { _c_content = content.GetObj() }
+  _cgo_return_ := C.elm_naviframe_item_simple_push(self.obj, _c_content)
+  _go_return_ := _cgo_return_
+  return _go_return_
+}
+
+func (self *Naviframe) ItemSimplePromote(content EvasObjectInterface) () {
+  var _c_content *C.Evas_Object
+  if content != nil { _c_content = content.GetObj() }
+  C.elm_naviframe_item_simple_promote(self.obj, _c_content)
+}
+
 func (self *Popup) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -12206,6 +13166,12 @@ func (self *Popup) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Popup) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Popup) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Popup) LayerSet(l int) () {
@@ -12360,6 +13326,11 @@ func (self *Popup) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Popup) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Popup) RenderOpSet(op C.Evas_Render_Op) () {
@@ -13214,6 +14185,31 @@ func (self *Popup) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Popup) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_popup_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Popup) ContentTextWrapTypeSet(wrap C.Elm_Wrap_Type) () {
+  C.elm_popup_content_text_wrap_type_set(self.obj, wrap)
+}
+
+func (self *Popup) OrientSet(orient C.Elm_Popup_Orient) () {
+  C.elm_popup_orient_set(self.obj, orient)
+}
+
+func (self *Popup) TimeoutSet(timeout float64) () {
+  _c_timeout := C.double(timeout)
+  C.elm_popup_timeout_set(self.obj, _c_timeout)
+}
+
+func (self *Popup) AllowEventsSet(allow bool) () {
+  _c_allow := (C.Eina_Bool)(0)
+  if allow { _c_allow = (C.Eina_Bool)(1) }
+  C.elm_popup_allow_events_set(self.obj, _c_allow)
+}
+
 func (self *Actionslider) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -13222,6 +14218,12 @@ func (self *Actionslider) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Actionslider) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Actionslider) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Actionslider) LayerSet(l int) () {
@@ -13376,6 +14378,11 @@ func (self *Actionslider) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Actionslider) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Actionslider) RenderOpSet(op C.Evas_Render_Op) () {
@@ -14230,6 +15237,24 @@ func (self *Actionslider) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Actionslider) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_actionslider_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Actionslider) IndicatorPosSet(pos C.Elm_Actionslider_Pos) () {
+  C.elm_actionslider_indicator_pos_set(self.obj, pos)
+}
+
+func (self *Actionslider) MagnetPosSet(pos C.Elm_Actionslider_Pos) () {
+  C.elm_actionslider_magnet_pos_set(self.obj, pos)
+}
+
+func (self *Actionslider) EnabledPosSet(pos C.Elm_Actionslider_Pos) () {
+  C.elm_actionslider_enabled_pos_set(self.obj, pos)
+}
+
 func (self *Bg) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -14238,6 +15263,12 @@ func (self *Bg) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Bg) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Bg) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Bg) LayerSet(l int) () {
@@ -14278,7 +15309,7 @@ func (self *Bg) Hide() () {
   C.evas_object_hide(self.obj)
 }
 
-func (self *Bg) ColorSet(r int, g int, b int, a int) () {
+func (self *Bg) EVASColorSet(r int, g int, b int, a int) () {
   _c_r := C.int(r)
   _c_g := C.int(g)
   _c_b := C.int(b)
@@ -14392,6 +15423,11 @@ func (self *Bg) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Bg) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Bg) RenderOpSet(op C.Evas_Render_Op) () {
@@ -15246,6 +16282,35 @@ func (self *Bg) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Bg) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_bg_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Bg) FileSet(file string, group string) (bool) {
+  _c_file := C.CString(file)
+  _c_group := C.CString(group)
+  _cgo_return_ := C.elm_bg_file_set(self.obj, _c_file, _c_group)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Bg) OptionSet(option C.Elm_Bg_Option) () {
+  C.elm_bg_option_set(self.obj, option)
+}
+
+func (self *Bg) ColorSet(r int, g int, b int) () {
+  _c_r := C.int(r)
+  _c_g := C.int(g)
+  _c_b := C.int(b)
+  C.elm_bg_color_set(self.obj, _c_r, _c_g, _c_b)
+}
+
+func (self *Bg) LoadSizeSet(w C.Evas_Coord, h C.Evas_Coord) () {
+  C.elm_bg_load_size_set(self.obj, w, h)
+}
+
 func (self *Box) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -15254,6 +16319,12 @@ func (self *Box) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Box) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Box) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Box) LayerSet(l int) () {
@@ -15408,6 +16479,11 @@ func (self *Box) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Box) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Box) RenderOpSet(op C.Evas_Render_Op) () {
@@ -16262,6 +17338,84 @@ func (self *Box) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Box) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_box_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Box) HorizontalSet(horizontal bool) () {
+  _c_horizontal := (C.Eina_Bool)(0)
+  if horizontal { _c_horizontal = (C.Eina_Bool)(1) }
+  C.elm_box_horizontal_set(self.obj, _c_horizontal)
+}
+
+func (self *Box) HomogeneousSet(homogeneous bool) () {
+  _c_homogeneous := (C.Eina_Bool)(0)
+  if homogeneous { _c_homogeneous = (C.Eina_Bool)(1) }
+  C.elm_box_homogeneous_set(self.obj, _c_homogeneous)
+}
+
+func (self *Box) PackStart(subobj EvasObjectInterface) () {
+  var _c_subobj *C.Evas_Object
+  if subobj != nil { _c_subobj = subobj.GetObj() }
+  C.elm_box_pack_start(self.obj, _c_subobj)
+}
+
+func (self *Box) PackEnd(subobj EvasObjectInterface) () {
+  var _c_subobj *C.Evas_Object
+  if subobj != nil { _c_subobj = subobj.GetObj() }
+  C.elm_box_pack_end(self.obj, _c_subobj)
+}
+
+func (self *Box) PackBefore(subobj EvasObjectInterface, before EvasObjectInterface) () {
+  var _c_subobj *C.Evas_Object
+  if subobj != nil { _c_subobj = subobj.GetObj() }
+  var _c_before *C.Evas_Object
+  if before != nil { _c_before = before.GetObj() }
+  C.elm_box_pack_before(self.obj, _c_subobj, _c_before)
+}
+
+func (self *Box) PackAfter(subobj EvasObjectInterface, after EvasObjectInterface) () {
+  var _c_subobj *C.Evas_Object
+  if subobj != nil { _c_subobj = subobj.GetObj() }
+  var _c_after *C.Evas_Object
+  if after != nil { _c_after = after.GetObj() }
+  C.elm_box_pack_after(self.obj, _c_subobj, _c_after)
+}
+
+func (self *Box) Clear() () {
+  C.elm_box_clear(self.obj)
+}
+
+func (self *Box) Unpack(subobj EvasObjectInterface) () {
+  var _c_subobj *C.Evas_Object
+  if subobj != nil { _c_subobj = subobj.GetObj() }
+  C.elm_box_unpack(self.obj, _c_subobj)
+}
+
+func (self *Box) UnpackAll() () {
+  C.elm_box_unpack_all(self.obj)
+}
+
+func (self *Box) PaddingSet(horizontal C.Evas_Coord, vertical C.Evas_Coord) () {
+  C.elm_box_padding_set(self.obj, horizontal, vertical)
+}
+
+func (self *Box) AlignSet(horizontal float64, vertical float64) () {
+  _c_horizontal := C.double(horizontal)
+  _c_vertical := C.double(vertical)
+  C.elm_box_align_set(self.obj, _c_horizontal, _c_vertical)
+}
+
+func (self *Box) Recalculate() () {
+  C.elm_box_recalculate(self.obj)
+}
+
+func (self *Box) LayoutTransition(priv *C.Evas_Object_Box_Data, data unsafe.Pointer) () {
+  C.elm_box_layout_transition(self.obj, priv, data)
+}
+
 func (self *Bubble) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -16270,6 +17424,12 @@ func (self *Bubble) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Bubble) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Bubble) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Bubble) LayerSet(l int) () {
@@ -16424,6 +17584,11 @@ func (self *Bubble) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Bubble) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Bubble) RenderOpSet(op C.Evas_Render_Op) () {
@@ -17278,6 +18443,16 @@ func (self *Bubble) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Bubble) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_bubble_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Bubble) PosSet(pos C.Elm_Bubble_Pos) () {
+  C.elm_bubble_pos_set(self.obj, pos)
+}
+
 func (self *Button) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -17286,6 +18461,12 @@ func (self *Button) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Button) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Button) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Button) LayerSet(l int) () {
@@ -17440,6 +18621,11 @@ func (self *Button) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Button) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Button) RenderOpSet(op C.Evas_Render_Op) () {
@@ -18294,6 +19480,28 @@ func (self *Button) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Button) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_button_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Button) AutorepeatSet(on bool) () {
+  _c_on := (C.Eina_Bool)(0)
+  if on { _c_on = (C.Eina_Bool)(1) }
+  C.elm_button_autorepeat_set(self.obj, _c_on)
+}
+
+func (self *Button) AutorepeatInitialTimeoutSet(t float64) () {
+  _c_t := C.double(t)
+  C.elm_button_autorepeat_initial_timeout_set(self.obj, _c_t)
+}
+
+func (self *Button) AutorepeatGapTimeoutSet(t float64) () {
+  _c_t := C.double(t)
+  C.elm_button_autorepeat_gap_timeout_set(self.obj, _c_t)
+}
+
 func (self *Calendar) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -18302,6 +19510,12 @@ func (self *Calendar) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Calendar) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Calendar) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Calendar) LayerSet(l int) () {
@@ -18456,6 +19670,11 @@ func (self *Calendar) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Calendar) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Calendar) RenderOpSet(op C.Evas_Render_Op) () {
@@ -19310,6 +20529,44 @@ func (self *Calendar) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Calendar) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_calendar_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Calendar) WeekdaysNamesSet(weekdays []string) () {
+  _c_weekdays := ConvertStringSliceToC(weekdays)
+  C.elm_calendar_weekdays_names_set(self.obj, _c_weekdays)
+}
+
+func (self *Calendar) MinMaxYearSet(min int, max int) () {
+  _c_min := C.int(min)
+  _c_max := C.int(max)
+  C.elm_calendar_min_max_year_set(self.obj, _c_min, _c_max)
+}
+
+func (self *Calendar) SelectModeSet(mode C.Elm_Calendar_Select_Mode) () {
+  C.elm_calendar_select_mode_set(self.obj, mode)
+}
+
+func (self *Calendar) MarksClear() () {
+  C.elm_calendar_marks_clear(self.obj)
+}
+
+func (self *Calendar) MarksDraw() () {
+  C.elm_calendar_marks_draw(self.obj)
+}
+
+func (self *Calendar) IntervalSet(interval float64) () {
+  _c_interval := C.double(interval)
+  C.elm_calendar_interval_set(self.obj, _c_interval)
+}
+
+func (self *Calendar) FirstDayOfWeekSet(day C.Elm_Calendar_Weekday) () {
+  C.elm_calendar_first_day_of_week_set(self.obj, day)
+}
+
 func (self *Check) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -19318,6 +20575,12 @@ func (self *Check) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Check) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Check) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Check) LayerSet(l int) () {
@@ -19472,6 +20735,11 @@ func (self *Check) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Check) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Check) RenderOpSet(op C.Evas_Render_Op) () {
@@ -20326,6 +21594,22 @@ func (self *Check) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Check) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_check_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Check) StateSet(state bool) () {
+  _c_state := (C.Eina_Bool)(0)
+  if state { _c_state = (C.Eina_Bool)(1) }
+  C.elm_check_state_set(self.obj, _c_state)
+}
+
+func (self *Check) StatePointerSet(statep *C.Eina_Bool) () {
+  C.elm_check_state_pointer_set(self.obj, statep)
+}
+
 func (self *Clock) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -20334,6 +21618,12 @@ func (self *Clock) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Clock) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Clock) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Clock) LayerSet(l int) () {
@@ -20488,6 +21778,11 @@ func (self *Clock) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Clock) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Clock) RenderOpSet(op C.Evas_Render_Op) () {
@@ -21342,6 +22637,46 @@ func (self *Clock) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Clock) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_clock_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Clock) TimeSet(hrs int, min int, sec int) () {
+  _c_hrs := C.int(hrs)
+  _c_min := C.int(min)
+  _c_sec := C.int(sec)
+  C.elm_clock_time_set(self.obj, _c_hrs, _c_min, _c_sec)
+}
+
+func (self *Clock) EditSet(edit bool) () {
+  _c_edit := (C.Eina_Bool)(0)
+  if edit { _c_edit = (C.Eina_Bool)(1) }
+  C.elm_clock_edit_set(self.obj, _c_edit)
+}
+
+func (self *Clock) EditModeSet(digedit C.Elm_Clock_Edit_Mode) () {
+  C.elm_clock_edit_mode_set(self.obj, digedit)
+}
+
+func (self *Clock) ShowAmPmSet(am_pm bool) () {
+  _c_am_pm := (C.Eina_Bool)(0)
+  if am_pm { _c_am_pm = (C.Eina_Bool)(1) }
+  C.elm_clock_show_am_pm_set(self.obj, _c_am_pm)
+}
+
+func (self *Clock) ShowSecondsSet(seconds bool) () {
+  _c_seconds := (C.Eina_Bool)(0)
+  if seconds { _c_seconds = (C.Eina_Bool)(1) }
+  C.elm_clock_show_seconds_set(self.obj, _c_seconds)
+}
+
+func (self *Clock) FirstIntervalSet(interval float64) () {
+  _c_interval := C.double(interval)
+  C.elm_clock_first_interval_set(self.obj, _c_interval)
+}
+
 func (self *Colorselector) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -21350,6 +22685,12 @@ func (self *Colorselector) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Colorselector) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Colorselector) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Colorselector) LayerSet(l int) () {
@@ -21390,7 +22731,7 @@ func (self *Colorselector) Hide() () {
   C.evas_object_hide(self.obj)
 }
 
-func (self *Colorselector) ColorSet(r int, g int, b int, a int) () {
+func (self *Colorselector) EVASColorSet(r int, g int, b int, a int) () {
   _c_r := C.int(r)
   _c_g := C.int(g)
   _c_b := C.int(b)
@@ -21504,6 +22845,11 @@ func (self *Colorselector) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Colorselector) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Colorselector) RenderOpSet(op C.Evas_Render_Op) () {
@@ -22358,6 +23704,43 @@ func (self *Colorselector) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Colorselector) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_colorselector_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Colorselector) ColorSet(r int, g int, b int, a int) () {
+  _c_r := C.int(r)
+  _c_g := C.int(g)
+  _c_b := C.int(b)
+  _c_a := C.int(a)
+  C.elm_colorselector_color_set(self.obj, _c_r, _c_g, _c_b, _c_a)
+}
+
+func (self *Colorselector) ModeSet(mode C.Elm_Colorselector_Mode) () {
+  C.elm_colorselector_mode_set(self.obj, mode)
+}
+
+func (self *Colorselector) PaletteColorAdd(r int, g int, b int, a int) (*C.Elm_Object_Item) {
+  _c_r := C.int(r)
+  _c_g := C.int(g)
+  _c_b := C.int(b)
+  _c_a := C.int(a)
+  _cgo_return_ := C.elm_colorselector_palette_color_add(self.obj, _c_r, _c_g, _c_b, _c_a)
+  _go_return_ := _cgo_return_
+  return _go_return_
+}
+
+func (self *Colorselector) PaletteClear() () {
+  C.elm_colorselector_palette_clear(self.obj)
+}
+
+func (self *Colorselector) PaletteNameSet(palette_name string) () {
+  _c_palette_name := C.CString(palette_name)
+  C.elm_colorselector_palette_name_set(self.obj, _c_palette_name)
+}
+
 func (self *Conformant) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -22366,6 +23749,12 @@ func (self *Conformant) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Conformant) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Conformant) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Conformant) LayerSet(l int) () {
@@ -22520,6 +23909,11 @@ func (self *Conformant) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Conformant) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Conformant) RenderOpSet(op C.Evas_Render_Op) () {
@@ -23374,6 +24768,12 @@ func (self *Conformant) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Conformant) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_conformant_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
 func (self *Datetime) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -23382,6 +24782,12 @@ func (self *Datetime) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Datetime) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Datetime) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Datetime) LayerSet(l int) () {
@@ -23536,6 +24942,11 @@ func (self *Datetime) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Datetime) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Datetime) RenderOpSet(op C.Evas_Render_Op) () {
@@ -24390,6 +25801,29 @@ func (self *Datetime) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Datetime) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_datetime_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Datetime) FormatSet(fmt string) () {
+  _c_fmt := C.CString(fmt)
+  C.elm_datetime_format_set(self.obj, _c_fmt)
+}
+
+func (self *Datetime) FieldLimitSet(fieldtype C.Elm_Datetime_Field_Type, min int, max int) () {
+  _c_min := C.int(min)
+  _c_max := C.int(max)
+  C.elm_datetime_field_limit_set(self.obj, fieldtype, _c_min, _c_max)
+}
+
+func (self *Datetime) FieldVisibleSet(fieldtype C.Elm_Datetime_Field_Type, visible bool) () {
+  _c_visible := (C.Eina_Bool)(0)
+  if visible { _c_visible = (C.Eina_Bool)(1) }
+  C.elm_datetime_field_visible_set(self.obj, fieldtype, _c_visible)
+}
+
 func (self *Diskselector) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -24398,6 +25832,12 @@ func (self *Diskselector) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Diskselector) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Diskselector) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Diskselector) LayerSet(l int) () {
@@ -24552,6 +25992,11 @@ func (self *Diskselector) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Diskselector) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Diskselector) RenderOpSet(op C.Evas_Render_Op) () {
@@ -25406,6 +26851,32 @@ func (self *Diskselector) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Diskselector) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_diskselector_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Diskselector) RoundEnabledSet(enabled bool) () {
+  _c_enabled := (C.Eina_Bool)(0)
+  if enabled { _c_enabled = (C.Eina_Bool)(1) }
+  C.elm_diskselector_round_enabled_set(self.obj, _c_enabled)
+}
+
+func (self *Diskselector) SideTextMaxLengthSet(len int) () {
+  _c_len := C.int(len)
+  C.elm_diskselector_side_text_max_length_set(self.obj, _c_len)
+}
+
+func (self *Diskselector) DisplayItemNumSet(num int) () {
+  _c_num := C.int(num)
+  C.elm_diskselector_display_item_num_set(self.obj, _c_num)
+}
+
+func (self *Diskselector) Clear() () {
+  C.elm_diskselector_clear(self.obj)
+}
+
 func (self *Flip) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -25414,6 +26885,12 @@ func (self *Flip) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Flip) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Flip) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Flip) LayerSet(l int) () {
@@ -25568,6 +27045,11 @@ func (self *Flip) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Flip) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Flip) RenderOpSet(op C.Evas_Render_Op) () {
@@ -26422,6 +27904,53 @@ func (self *Flip) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Flip) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_flip_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Flip) PerspectiveSet(foc C.Evas_Coord, x C.Evas_Coord, y C.Evas_Coord) () {
+  C.elm_flip_perspective_set(self.obj, foc, x, y)
+}
+
+func (self *Flip) Go(mode C.Elm_Flip_Mode) () {
+  C.elm_flip_go(self.obj, mode)
+}
+
+func (self *Flip) GoTo(front bool, mode C.Elm_Flip_Mode) () {
+  _c_front := (C.Eina_Bool)(0)
+  if front { _c_front = (C.Eina_Bool)(1) }
+  C.elm_flip_go_to(self.obj, _c_front, mode)
+}
+
+func (self *Flip) InteractionSet(mode C.Elm_Flip_Interaction) () {
+  C.elm_flip_interaction_set(self.obj, mode)
+}
+
+func (self *Flip) InteractionDirectionEnabledSet(dir C.Elm_Flip_Direction, enabled bool) () {
+  _c_enabled := (C.Eina_Bool)(0)
+  if enabled { _c_enabled = (C.Eina_Bool)(1) }
+  C.elm_flip_interaction_direction_enabled_set(self.obj, dir, _c_enabled)
+}
+
+func (self *Flip) InteractionDirectionEnabledGet(dir C.Elm_Flip_Direction) (bool) {
+  _cgo_return_ := C.elm_flip_interaction_direction_enabled_get(self.obj, dir)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Flip) InteractionDirectionHitsizeSet(dir C.Elm_Flip_Direction, hitsize float64) () {
+  _c_hitsize := C.double(hitsize)
+  C.elm_flip_interaction_direction_hitsize_set(self.obj, dir, _c_hitsize)
+}
+
+func (self *Flip) InteractionDirectionHitsizeGet(dir C.Elm_Flip_Direction) (float64) {
+  _cgo_return_ := C.elm_flip_interaction_direction_hitsize_get(self.obj, dir)
+  _go_return_ := float64(_cgo_return_)
+  return _go_return_
+}
+
 func (self *Flipselector) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -26430,6 +27959,12 @@ func (self *Flipselector) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Flipselector) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Flipselector) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Flipselector) LayerSet(l int) () {
@@ -26584,6 +28119,11 @@ func (self *Flipselector) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Flipselector) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Flipselector) RenderOpSet(op C.Evas_Render_Op) () {
@@ -27438,6 +28978,25 @@ func (self *Flipselector) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Flipselector) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_flipselector_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Flipselector) FlipNext() () {
+  C.elm_flipselector_flip_next(self.obj)
+}
+
+func (self *Flipselector) FlipPrev() () {
+  C.elm_flipselector_flip_prev(self.obj)
+}
+
+func (self *Flipselector) FirstIntervalSet(interval float64) () {
+  _c_interval := C.double(interval)
+  C.elm_flipselector_first_interval_set(self.obj, _c_interval)
+}
+
 func (self *Frame) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -27446,6 +29005,12 @@ func (self *Frame) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Frame) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Frame) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Frame) LayerSet(l int) () {
@@ -27600,6 +29165,11 @@ func (self *Frame) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Frame) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Frame) RenderOpSet(op C.Evas_Render_Op) () {
@@ -28454,6 +30024,30 @@ func (self *Frame) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Frame) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_frame_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Frame) AutocollapseSet(autocollapse bool) () {
+  _c_autocollapse := (C.Eina_Bool)(0)
+  if autocollapse { _c_autocollapse = (C.Eina_Bool)(1) }
+  C.elm_frame_autocollapse_set(self.obj, _c_autocollapse)
+}
+
+func (self *Frame) CollapseSet(collapse bool) () {
+  _c_collapse := (C.Eina_Bool)(0)
+  if collapse { _c_collapse = (C.Eina_Bool)(1) }
+  C.elm_frame_collapse_set(self.obj, _c_collapse)
+}
+
+func (self *Frame) CollapseGo(collapse bool) () {
+  _c_collapse := (C.Eina_Bool)(0)
+  if collapse { _c_collapse = (C.Eina_Bool)(1) }
+  C.elm_frame_collapse_go(self.obj, _c_collapse)
+}
+
 func (self *Gengrid) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -28462,6 +30056,12 @@ func (self *Gengrid) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Gengrid) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Gengrid) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Gengrid) LayerSet(l int) () {
@@ -28616,6 +30216,11 @@ func (self *Gengrid) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Gengrid) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Gengrid) RenderOpSet(op C.Evas_Render_Op) () {
@@ -29470,6 +31075,68 @@ func (self *Gengrid) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Gengrid) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_gengrid_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Gengrid) Clear() () {
+  C.elm_gengrid_clear(self.obj)
+}
+
+func (self *Gengrid) MultiSelectSet(multi bool) () {
+  _c_multi := (C.Eina_Bool)(0)
+  if multi { _c_multi = (C.Eina_Bool)(1) }
+  C.elm_gengrid_multi_select_set(self.obj, _c_multi)
+}
+
+func (self *Gengrid) HorizontalSet(horizontal bool) () {
+  _c_horizontal := (C.Eina_Bool)(0)
+  if horizontal { _c_horizontal = (C.Eina_Bool)(1) }
+  C.elm_gengrid_horizontal_set(self.obj, _c_horizontal)
+}
+
+func (self *Gengrid) RealizedItemsUpdate() () {
+  C.elm_gengrid_realized_items_update(self.obj)
+}
+
+func (self *Gengrid) ItemSizeSet(w C.Evas_Coord, h C.Evas_Coord) () {
+  C.elm_gengrid_item_size_set(self.obj, w, h)
+}
+
+func (self *Gengrid) GroupItemSizeSet(w C.Evas_Coord, h C.Evas_Coord) () {
+  C.elm_gengrid_group_item_size_set(self.obj, w, h)
+}
+
+func (self *Gengrid) AlignSet(align_x float64, align_y float64) () {
+  _c_align_x := C.double(align_x)
+  _c_align_y := C.double(align_y)
+  C.elm_gengrid_align_set(self.obj, _c_align_x, _c_align_y)
+}
+
+func (self *Gengrid) ReorderModeSet(reorder_mode bool) () {
+  _c_reorder_mode := (C.Eina_Bool)(0)
+  if reorder_mode { _c_reorder_mode = (C.Eina_Bool)(1) }
+  C.elm_gengrid_reorder_mode_set(self.obj, _c_reorder_mode)
+}
+
+func (self *Gengrid) FilledSet(fill bool) () {
+  _c_fill := (C.Eina_Bool)(0)
+  if fill { _c_fill = (C.Eina_Bool)(1) }
+  C.elm_gengrid_filled_set(self.obj, _c_fill)
+}
+
+func (self *Gengrid) SelectModeSet(mode C.Elm_Object_Select_Mode) () {
+  C.elm_gengrid_select_mode_set(self.obj, mode)
+}
+
+func (self *Gengrid) HighlightModeSet(highlight bool) () {
+  _c_highlight := (C.Eina_Bool)(0)
+  if highlight { _c_highlight = (C.Eina_Bool)(1) }
+  C.elm_gengrid_highlight_mode_set(self.obj, _c_highlight)
+}
+
 func (self *Genlist) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -29478,6 +31145,12 @@ func (self *Genlist) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Genlist) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Genlist) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Genlist) LayerSet(l int) () {
@@ -29632,6 +31305,11 @@ func (self *Genlist) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Genlist) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Genlist) RenderOpSet(op C.Evas_Render_Op) () {
@@ -30486,6 +32164,74 @@ func (self *Genlist) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Genlist) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_genlist_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Genlist) Clear() () {
+  C.elm_genlist_clear(self.obj)
+}
+
+func (self *Genlist) MultiSelectSet(multi bool) () {
+  _c_multi := (C.Eina_Bool)(0)
+  if multi { _c_multi = (C.Eina_Bool)(1) }
+  C.elm_genlist_multi_select_set(self.obj, _c_multi)
+}
+
+func (self *Genlist) ModeSet(mode C.Elm_List_Mode) () {
+  C.elm_genlist_mode_set(self.obj, mode)
+}
+
+func (self *Genlist) RealizedItemsUpdate() () {
+  C.elm_genlist_realized_items_update(self.obj)
+}
+
+func (self *Genlist) HomogeneousSet(homogeneous bool) () {
+  _c_homogeneous := (C.Eina_Bool)(0)
+  if homogeneous { _c_homogeneous = (C.Eina_Bool)(1) }
+  C.elm_genlist_homogeneous_set(self.obj, _c_homogeneous)
+}
+
+func (self *Genlist) BlockCountSet(count int) () {
+  _c_count := C.int(count)
+  C.elm_genlist_block_count_set(self.obj, _c_count)
+}
+
+func (self *Genlist) LongpressTimeoutSet(timeout float64) () {
+  _c_timeout := C.double(timeout)
+  C.elm_genlist_longpress_timeout_set(self.obj, _c_timeout)
+}
+
+func (self *Genlist) ReorderModeSet(reorder_mode bool) () {
+  _c_reorder_mode := (C.Eina_Bool)(0)
+  if reorder_mode { _c_reorder_mode = (C.Eina_Bool)(1) }
+  C.elm_genlist_reorder_mode_set(self.obj, _c_reorder_mode)
+}
+
+func (self *Genlist) DecorateModeSet(decorated bool) () {
+  _c_decorated := (C.Eina_Bool)(0)
+  if decorated { _c_decorated = (C.Eina_Bool)(1) }
+  C.elm_genlist_decorate_mode_set(self.obj, _c_decorated)
+}
+
+func (self *Genlist) TreeEffectEnabledSet(enabled bool) () {
+  _c_enabled := (C.Eina_Bool)(0)
+  if enabled { _c_enabled = (C.Eina_Bool)(1) }
+  C.elm_genlist_tree_effect_enabled_set(self.obj, _c_enabled)
+}
+
+func (self *Genlist) SelectModeSet(mode C.Elm_Object_Select_Mode) () {
+  C.elm_genlist_select_mode_set(self.obj, mode)
+}
+
+func (self *Genlist) HighlightModeSet(highlight bool) () {
+  _c_highlight := (C.Eina_Bool)(0)
+  if highlight { _c_highlight = (C.Eina_Bool)(1) }
+  C.elm_genlist_highlight_mode_set(self.obj, _c_highlight)
+}
+
 func (self *GestureLayer) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -30494,6 +32240,12 @@ func (self *GestureLayer) ClipSet(clip EvasObjectInterface) () {
 
 func (self *GestureLayer) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *GestureLayer) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *GestureLayer) LayerSet(l int) () {
@@ -30648,6 +32400,11 @@ func (self *GestureLayer) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *GestureLayer) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *GestureLayer) RenderOpSet(op C.Evas_Render_Op) () {
@@ -31502,6 +33259,36 @@ func (self *GestureLayer) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *GestureLayer) HoldEventsSet(hold_events bool) () {
+  _c_hold_events := (C.Eina_Bool)(0)
+  if hold_events { _c_hold_events = (C.Eina_Bool)(1) }
+  C.elm_gesture_layer_hold_events_set(self.obj, _c_hold_events)
+}
+
+func (self *GestureLayer) ZoomStepSet(step float64) () {
+  _c_step := C.double(step)
+  C.elm_gesture_layer_zoom_step_set(self.obj, _c_step)
+}
+
+func (self *GestureLayer) RotateStepSet(step float64) () {
+  _c_step := C.double(step)
+  C.elm_gesture_layer_rotate_step_set(self.obj, _c_step)
+}
+
+func (self *GestureLayer) Attach(target EvasObjectInterface) (bool) {
+  var _c_target *C.Evas_Object
+  if target != nil { _c_target = target.GetObj() }
+  _cgo_return_ := C.elm_gesture_layer_attach(self.obj, _c_target)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *GestureLayer) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_gesture_layer_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
 func (self *Glview) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -31510,6 +33297,12 @@ func (self *Glview) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Glview) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Glview) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Glview) LayerSet(l int) () {
@@ -31664,6 +33457,11 @@ func (self *Glview) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Glview) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Glview) RenderOpSet(op C.Evas_Render_Op) () {
@@ -32518,6 +34316,38 @@ func (self *Glview) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Glview) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_glview_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Glview) SizeSet(w C.Evas_Coord, h C.Evas_Coord) () {
+  C.elm_glview_size_set(self.obj, w, h)
+}
+
+func (self *Glview) ModeSet(mode C.Elm_GLView_Mode) (bool) {
+  _cgo_return_ := C.elm_glview_mode_set(self.obj, mode)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Glview) ResizePolicySet(policy C.Elm_GLView_Resize_Policy) (bool) {
+  _cgo_return_ := C.elm_glview_resize_policy_set(self.obj, policy)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Glview) RenderPolicySet(policy C.Elm_GLView_Render_Policy) (bool) {
+  _cgo_return_ := C.elm_glview_render_policy_set(self.obj, policy)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Glview) ChangedSet() () {
+  C.elm_glview_changed_set(self.obj)
+}
+
 func (self *Grid) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -32526,6 +34356,12 @@ func (self *Grid) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Grid) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Grid) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Grid) LayerSet(l int) () {
@@ -32680,6 +34516,11 @@ func (self *Grid) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Grid) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Grid) RenderOpSet(op C.Evas_Render_Op) () {
@@ -33534,6 +35375,42 @@ func (self *Grid) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Grid) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_grid_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Grid) SizeSet(w C.Evas_Coord, h C.Evas_Coord) () {
+  C.elm_grid_size_set(self.obj, w, h)
+}
+
+func (self *Grid) Pack(subobj EvasObjectInterface, x C.Evas_Coord, y C.Evas_Coord, w C.Evas_Coord, h C.Evas_Coord) () {
+  var _c_subobj *C.Evas_Object
+  if subobj != nil { _c_subobj = subobj.GetObj() }
+  C.elm_grid_pack(self.obj, _c_subobj, x, y, w, h)
+}
+
+func (self *Grid) Unpack(subobj EvasObjectInterface) () {
+  var _c_subobj *C.Evas_Object
+  if subobj != nil { _c_subobj = subobj.GetObj() }
+  C.elm_grid_unpack(self.obj, _c_subobj)
+}
+
+func (self *Grid) Clear(clear bool) () {
+  _c_clear := (C.Eina_Bool)(0)
+  if clear { _c_clear = (C.Eina_Bool)(1) }
+  C.elm_grid_clear(self.obj, _c_clear)
+}
+
+func (self *Grid) PackSet(x C.Evas_Coord, y C.Evas_Coord, w C.Evas_Coord, h C.Evas_Coord) () {
+  C.elm_grid_pack_set(self.obj, x, y, w, h)
+}
+
+func (self *Grid) PackGet(x *C.Evas_Coord, y *C.Evas_Coord, w *C.Evas_Coord, h *C.Evas_Coord) () {
+  C.elm_grid_pack_get(self.obj, x, y, w, h)
+}
+
 func (self *Hover) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -33542,6 +35419,12 @@ func (self *Hover) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Hover) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Hover) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Hover) LayerSet(l int) () {
@@ -33696,6 +35579,11 @@ func (self *Hover) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Hover) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Hover) RenderOpSet(op C.Evas_Render_Op) () {
@@ -34550,6 +36438,28 @@ func (self *Hover) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Hover) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_hover_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Hover) TargetSet(target EvasObjectInterface) () {
+  var _c_target *C.Evas_Object
+  if target != nil { _c_target = target.GetObj() }
+  C.elm_hover_target_set(self.obj, _c_target)
+}
+
+func (self *Hover) ParentSet(parent EvasObjectInterface) () {
+  var _c_parent *C.Evas_Object
+  if parent != nil { _c_parent = parent.GetObj() }
+  C.elm_hover_parent_set(self.obj, _c_parent)
+}
+
+func (self *Hover) Dismiss() () {
+  C.elm_hover_dismiss(self.obj)
+}
+
 func (self *Image) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -34558,6 +36468,12 @@ func (self *Image) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Image) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Image) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Image) LayerSet(l int) () {
@@ -34712,6 +36628,11 @@ func (self *Image) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Image) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Image) RenderOpSet(op C.Evas_Render_Op) () {
@@ -35566,6 +37487,94 @@ func (self *Image) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Image) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_image_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Image) MemfileSet(img unsafe.Pointer, size uint64, format string, key string) (bool) {
+  _c_size := C.size_t(size)
+  _c_format := C.CString(format)
+  _c_key := C.CString(key)
+  _cgo_return_ := C.elm_image_memfile_set(self.obj, img, _c_size, _c_format, _c_key)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Image) FileSet(file string, group string) (bool) {
+  _c_file := C.CString(file)
+  _c_group := C.CString(group)
+  _cgo_return_ := C.elm_image_file_set(self.obj, _c_file, _c_group)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Image) SmoothSet(smooth bool) () {
+  _c_smooth := (C.Eina_Bool)(0)
+  if smooth { _c_smooth = (C.Eina_Bool)(1) }
+  C.elm_image_smooth_set(self.obj, _c_smooth)
+}
+
+func (self *Image) NoScaleSet(no_scale bool) () {
+  _c_no_scale := (C.Eina_Bool)(0)
+  if no_scale { _c_no_scale = (C.Eina_Bool)(1) }
+  C.elm_image_no_scale_set(self.obj, _c_no_scale)
+}
+
+func (self *Image) ResizableSet(size_up bool, size_down bool) () {
+  _c_size_up := (C.Eina_Bool)(0)
+  if size_up { _c_size_up = (C.Eina_Bool)(1) }
+  _c_size_down := (C.Eina_Bool)(0)
+  if size_down { _c_size_down = (C.Eina_Bool)(1) }
+  C.elm_image_resizable_set(self.obj, _c_size_up, _c_size_down)
+}
+
+func (self *Image) FillOutsideSet(fill_outside bool) () {
+  _c_fill_outside := (C.Eina_Bool)(0)
+  if fill_outside { _c_fill_outside = (C.Eina_Bool)(1) }
+  C.elm_image_fill_outside_set(self.obj, _c_fill_outside)
+}
+
+func (self *Image) PreloadDisabledSet(disabled bool) () {
+  _c_disabled := (C.Eina_Bool)(0)
+  if disabled { _c_disabled = (C.Eina_Bool)(1) }
+  C.elm_image_preload_disabled_set(self.obj, _c_disabled)
+}
+
+func (self *Image) PrescaleSet(size int) () {
+  _c_size := C.int(size)
+  C.elm_image_prescale_set(self.obj, _c_size)
+}
+
+func (self *Image) OrientSet(orient C.Elm_Image_Orient) () {
+  C.elm_image_orient_set(self.obj, orient)
+}
+
+func (self *Image) EditableSet(set bool) () {
+  _c_set := (C.Eina_Bool)(0)
+  if set { _c_set = (C.Eina_Bool)(1) }
+  C.elm_image_editable_set(self.obj, _c_set)
+}
+
+func (self *Image) AspectFixedSet(fixed bool) () {
+  _c_fixed := (C.Eina_Bool)(0)
+  if fixed { _c_fixed = (C.Eina_Bool)(1) }
+  C.elm_image_aspect_fixed_set(self.obj, _c_fixed)
+}
+
+func (self *Image) AnimatedSet(animated bool) () {
+  _c_animated := (C.Eina_Bool)(0)
+  if animated { _c_animated = (C.Eina_Bool)(1) }
+  C.elm_image_animated_set(self.obj, _c_animated)
+}
+
+func (self *Image) AnimatedPlaySet(play bool) () {
+  _c_play := (C.Eina_Bool)(0)
+  if play { _c_play = (C.Eina_Bool)(1) }
+  C.elm_image_animated_play_set(self.obj, _c_play)
+}
+
 func (self *Index) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -35574,6 +37583,12 @@ func (self *Index) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Index) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Index) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Index) LayerSet(l int) () {
@@ -35728,6 +37743,11 @@ func (self *Index) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Index) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Index) RenderOpSet(op C.Evas_Render_Op) () {
@@ -36582,6 +38602,50 @@ func (self *Index) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Index) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_index_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Index) AutohideDisabledSet(disabled bool) () {
+  _c_disabled := (C.Eina_Bool)(0)
+  if disabled { _c_disabled = (C.Eina_Bool)(1) }
+  C.elm_index_autohide_disabled_set(self.obj, _c_disabled)
+}
+
+func (self *Index) ItemLevelSet(level int) () {
+  _c_level := C.int(level)
+  C.elm_index_item_level_set(self.obj, _c_level)
+}
+
+func (self *Index) ItemFind(data unsafe.Pointer) (*C.Elm_Object_Item) {
+  _cgo_return_ := C.elm_index_item_find(self.obj, data)
+  _go_return_ := _cgo_return_
+  return _go_return_
+}
+
+func (self *Index) ItemClear() () {
+  C.elm_index_item_clear(self.obj)
+}
+
+func (self *Index) LevelGo(level int) () {
+  _c_level := C.int(level)
+  C.elm_index_level_go(self.obj, _c_level)
+}
+
+func (self *Index) IndicatorDisabledSet(disabled bool) () {
+  _c_disabled := (C.Eina_Bool)(0)
+  if disabled { _c_disabled = (C.Eina_Bool)(1) }
+  C.elm_index_indicator_disabled_set(self.obj, _c_disabled)
+}
+
+func (self *Index) HorizontalSet(horizontal bool) () {
+  _c_horizontal := (C.Eina_Bool)(0)
+  if horizontal { _c_horizontal = (C.Eina_Bool)(1) }
+  C.elm_index_horizontal_set(self.obj, _c_horizontal)
+}
+
 func (self *WinInwin) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -36590,6 +38654,12 @@ func (self *WinInwin) ClipSet(clip EvasObjectInterface) () {
 
 func (self *WinInwin) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *WinInwin) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *WinInwin) LayerSet(l int) () {
@@ -36744,6 +38814,11 @@ func (self *WinInwin) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *WinInwin) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *WinInwin) RenderOpSet(op C.Evas_Render_Op) () {
@@ -37598,6 +39673,28 @@ func (self *WinInwin) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *WinInwin) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_win_inwin_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *WinInwin) Activate() () {
+  C.elm_win_inwin_activate(self.obj)
+}
+
+func (self *WinInwin) ContentSet(content EvasObjectInterface) () {
+  var _c_content *C.Evas_Object
+  if content != nil { _c_content = content.GetObj() }
+  C.elm_win_inwin_content_set(self.obj, _c_content)
+}
+
+func (self *WinInwin) ContentUnset() (*EvasObject) {
+  _cgo_return_ := C.elm_win_inwin_content_unset(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
 func (self *Label) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -37606,6 +39703,12 @@ func (self *Label) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Label) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Label) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Label) LayerSet(l int) () {
@@ -37760,6 +39863,11 @@ func (self *Label) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Label) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Label) RenderOpSet(op C.Evas_Render_Op) () {
@@ -38614,6 +40722,37 @@ func (self *Label) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Label) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_label_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Label) LineWrapSet(wrap C.Elm_Wrap_Type) () {
+  C.elm_label_line_wrap_set(self.obj, wrap)
+}
+
+func (self *Label) WrapWidthSet(w C.Evas_Coord) () {
+  C.elm_label_wrap_width_set(self.obj, w)
+}
+
+func (self *Label) EllipsisSet(ellipsis bool) () {
+  _c_ellipsis := (C.Eina_Bool)(0)
+  if ellipsis { _c_ellipsis = (C.Eina_Bool)(1) }
+  C.elm_label_ellipsis_set(self.obj, _c_ellipsis)
+}
+
+func (self *Label) SlideSet(slide bool) () {
+  _c_slide := (C.Eina_Bool)(0)
+  if slide { _c_slide = (C.Eina_Bool)(1) }
+  C.elm_label_slide_set(self.obj, _c_slide)
+}
+
+func (self *Label) SlideDurationSet(duration float64) () {
+  _c_duration := C.double(duration)
+  C.elm_label_slide_duration_set(self.obj, _c_duration)
+}
+
 func (self *Layout) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -38622,6 +40761,12 @@ func (self *Layout) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Layout) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Layout) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Layout) LayerSet(l int) () {
@@ -38776,6 +40921,11 @@ func (self *Layout) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Layout) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Layout) RenderOpSet(op C.Evas_Render_Op) () {
@@ -39248,7 +41398,7 @@ func (self *Layout) BoxPaddingSet(horizontal C.Evas_Coord, vertical C.Evas_Coord
   C.evas_object_box_padding_set(self.obj, horizontal, vertical)
 }
 
-func (self *Layout) BoxAppend(child EvasObjectInterface) (*C.Evas_Object_Box_Option) {
+func (self *Layout) EVASBoxAppend(child EvasObjectInterface) (*C.Evas_Object_Box_Option) {
   var _c_child *C.Evas_Object
   if child != nil { _c_child = child.GetObj() }
   _cgo_return_ := C.evas_object_box_append(self.obj, _c_child)
@@ -39256,7 +41406,7 @@ func (self *Layout) BoxAppend(child EvasObjectInterface) (*C.Evas_Object_Box_Opt
   return _go_return_
 }
 
-func (self *Layout) BoxPrepend(child EvasObjectInterface) (*C.Evas_Object_Box_Option) {
+func (self *Layout) EVASBoxPrepend(child EvasObjectInterface) (*C.Evas_Object_Box_Option) {
   var _c_child *C.Evas_Object
   if child != nil { _c_child = child.GetObj() }
   _cgo_return_ := C.evas_object_box_prepend(self.obj, _c_child)
@@ -39264,7 +41414,7 @@ func (self *Layout) BoxPrepend(child EvasObjectInterface) (*C.Evas_Object_Box_Op
   return _go_return_
 }
 
-func (self *Layout) BoxInsertBefore(child EvasObjectInterface, reference *C.Evas_Object) (*C.Evas_Object_Box_Option) {
+func (self *Layout) EVASBoxInsertBefore(child EvasObjectInterface, reference *C.Evas_Object) (*C.Evas_Object_Box_Option) {
   var _c_child *C.Evas_Object
   if child != nil { _c_child = child.GetObj() }
   _cgo_return_ := C.evas_object_box_insert_before(self.obj, _c_child, reference)
@@ -39280,7 +41430,7 @@ func (self *Layout) BoxInsertAfter(child EvasObjectInterface, reference *C.Evas_
   return _go_return_
 }
 
-func (self *Layout) BoxInsertAt(child EvasObjectInterface, pos uint) (*C.Evas_Object_Box_Option) {
+func (self *Layout) EVASBoxInsertAt(child EvasObjectInterface, pos uint) (*C.Evas_Object_Box_Option) {
   var _c_child *C.Evas_Object
   if child != nil { _c_child = child.GetObj() }
   _c_pos := C.uint(pos)
@@ -39289,7 +41439,7 @@ func (self *Layout) BoxInsertAt(child EvasObjectInterface, pos uint) (*C.Evas_Ob
   return _go_return_
 }
 
-func (self *Layout) BoxRemove(child EvasObjectInterface) (bool) {
+func (self *Layout) EVASBoxRemove(child EvasObjectInterface) (bool) {
   var _c_child *C.Evas_Object
   if child != nil { _c_child = child.GetObj() }
   _cgo_return_ := C.evas_object_box_remove(self.obj, _c_child)
@@ -39304,7 +41454,7 @@ func (self *Layout) BoxRemoveAt(pos uint) (bool) {
   return _go_return_
 }
 
-func (self *Layout) BoxRemoveAll(clear bool) (bool) {
+func (self *Layout) EVASBoxRemoveAll(clear bool) (bool) {
   _c_clear := (C.Eina_Bool)(0)
   if clear { _c_clear = (C.Eina_Bool)(1) }
   _cgo_return_ := C.evas_object_box_remove_all(self.obj, _c_clear)
@@ -39338,7 +41488,7 @@ func (self *Layout) TableMirroredSet(mirrored bool) () {
   C.evas_object_table_mirrored_set(self.obj, _c_mirrored)
 }
 
-func (self *Layout) TablePack(child EvasObjectInterface, col uint, row uint, colspan uint, rowspan uint) (bool) {
+func (self *Layout) EVASTablePack(child EvasObjectInterface, col uint, row uint, colspan uint, rowspan uint) (bool) {
   var _c_child *C.Evas_Object
   if child != nil { _c_child = child.GetObj() }
   _c_col := C.ushort(col)
@@ -39350,7 +41500,7 @@ func (self *Layout) TablePack(child EvasObjectInterface, col uint, row uint, col
   return _go_return_
 }
 
-func (self *Layout) TableUnpack(child EvasObjectInterface) (bool) {
+func (self *Layout) EVASTableUnpack(child EvasObjectInterface) (bool) {
   var _c_child *C.Evas_Object
   if child != nil { _c_child = child.GetObj() }
   _cgo_return_ := C.evas_object_table_unpack(self.obj, _c_child)
@@ -39358,7 +41508,7 @@ func (self *Layout) TableUnpack(child EvasObjectInterface) (bool) {
   return _go_return_
 }
 
-func (self *Layout) TableClear(clear bool) () {
+func (self *Layout) EVASTableClear(clear bool) () {
   _c_clear := (C.Eina_Bool)(0)
   if clear { _c_clear = (C.Eina_Bool)(1) }
   C.evas_object_table_clear(self.obj, _c_clear)
@@ -39587,7 +41737,7 @@ func (self *Layout) DisabledSet(disabled bool) () {
   C.elm_object_disabled_set(self.obj, _c_disabled)
 }
 
-func (self *Layout) SignalEmit(emission string, source string) () {
+func (self *Layout) ELMSignalEmit(emission string, source string) () {
   _c_emission := C.CString(emission)
   _c_source := C.CString(source)
   C.elm_object_signal_emit(self.obj, _c_emission, _c_source)
@@ -39626,8 +41776,209 @@ func (self *Layout) ScrollLockYSet(lock bool) () {
   C.elm_object_scroll_lock_y_set(self.obj, _c_lock)
 }
 
-func (self *Layout) ThemeSet(th *C.Elm_Theme) () {
+func (self *Layout) ELMThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
+}
+
+func (self *Layout) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_layout_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Layout) FileSet(file string, group string) (bool) {
+  _c_file := C.CString(file)
+  _c_group := C.CString(group)
+  _cgo_return_ := C.elm_layout_file_set(self.obj, _c_file, _c_group)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Layout) Freeze() (int) {
+  _cgo_return_ := C.elm_layout_freeze(self.obj)
+  _go_return_ := int(_cgo_return_)
+  return _go_return_
+}
+
+func (self *Layout) Thaw() (int) {
+  _cgo_return_ := C.elm_layout_thaw(self.obj)
+  _go_return_ := int(_cgo_return_)
+  return _go_return_
+}
+
+func (self *Layout) ThemeSet(clas string, group string, style string) (bool) {
+  _c_clas := C.CString(clas)
+  _c_group := C.CString(group)
+  _c_style := C.CString(style)
+  _cgo_return_ := C.elm_layout_theme_set(self.obj, _c_clas, _c_group, _c_style)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Layout) SignalEmit(emission string, source string) () {
+  _c_emission := C.CString(emission)
+  _c_source := C.CString(source)
+  C.elm_layout_signal_emit(self.obj, _c_emission, _c_source)
+}
+
+func (self *Layout) BoxAppend(part string, child EvasObjectInterface) (bool) {
+  _c_part := C.CString(part)
+  var _c_child *C.Evas_Object
+  if child != nil { _c_child = child.GetObj() }
+  _cgo_return_ := C.elm_layout_box_append(self.obj, _c_part, _c_child)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Layout) BoxPrepend(part string, child EvasObjectInterface) (bool) {
+  _c_part := C.CString(part)
+  var _c_child *C.Evas_Object
+  if child != nil { _c_child = child.GetObj() }
+  _cgo_return_ := C.elm_layout_box_prepend(self.obj, _c_part, _c_child)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Layout) BoxInsertBefore(part string, child EvasObjectInterface, reference *C.Evas_Object) (bool) {
+  _c_part := C.CString(part)
+  var _c_child *C.Evas_Object
+  if child != nil { _c_child = child.GetObj() }
+  _cgo_return_ := C.elm_layout_box_insert_before(self.obj, _c_part, _c_child, reference)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Layout) BoxInsertAt(part string, child EvasObjectInterface, pos uint) (bool) {
+  _c_part := C.CString(part)
+  var _c_child *C.Evas_Object
+  if child != nil { _c_child = child.GetObj() }
+  _c_pos := C.uint(pos)
+  _cgo_return_ := C.elm_layout_box_insert_at(self.obj, _c_part, _c_child, _c_pos)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Layout) BoxRemove(part string, child EvasObjectInterface) (*EvasObject) {
+  _c_part := C.CString(part)
+  var _c_child *C.Evas_Object
+  if child != nil { _c_child = child.GetObj() }
+  _cgo_return_ := C.elm_layout_box_remove(self.obj, _c_part, _c_child)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Layout) BoxRemoveAll(part string, clear bool) (bool) {
+  _c_part := C.CString(part)
+  _c_clear := (C.Eina_Bool)(0)
+  if clear { _c_clear = (C.Eina_Bool)(1) }
+  _cgo_return_ := C.elm_layout_box_remove_all(self.obj, _c_part, _c_clear)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Layout) TablePack(part string, child_obj EvasObjectInterface, col uint, row uint, colspan uint, rowspan uint) (bool) {
+  _c_part := C.CString(part)
+  var _c_child_obj *C.Evas_Object
+  if child_obj != nil { _c_child_obj = child_obj.GetObj() }
+  _c_col := C.ushort(col)
+  _c_row := C.ushort(row)
+  _c_colspan := C.ushort(colspan)
+  _c_rowspan := C.ushort(rowspan)
+  _cgo_return_ := C.elm_layout_table_pack(self.obj, _c_part, _c_child_obj, _c_col, _c_row, _c_colspan, _c_rowspan)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Layout) TableUnpack(part string, child_obj EvasObjectInterface) (*EvasObject) {
+  _c_part := C.CString(part)
+  var _c_child_obj *C.Evas_Object
+  if child_obj != nil { _c_child_obj = child_obj.GetObj() }
+  _cgo_return_ := C.elm_layout_table_unpack(self.obj, _c_part, _c_child_obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Layout) TableClear(part string, clear bool) (bool) {
+  _c_part := C.CString(part)
+  _c_clear := (C.Eina_Bool)(0)
+  if clear { _c_clear = (C.Eina_Bool)(1) }
+  _cgo_return_ := C.elm_layout_table_clear(self.obj, _c_part, _c_clear)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Layout) SizingEval() () {
+  C.elm_layout_sizing_eval(self.obj)
+}
+
+func (self *Layout) PartCursorSet(part_name string, cursor string) (bool) {
+  _c_part_name := C.CString(part_name)
+  _c_cursor := C.CString(cursor)
+  _cgo_return_ := C.elm_layout_part_cursor_set(self.obj, _c_part_name, _c_cursor)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Layout) PartCursorUnset(part_name string) (bool) {
+  _c_part_name := C.CString(part_name)
+  _cgo_return_ := C.elm_layout_part_cursor_unset(self.obj, _c_part_name)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Layout) PartCursorStyleSet(part_name string, style string) (bool) {
+  _c_part_name := C.CString(part_name)
+  _c_style := C.CString(style)
+  _cgo_return_ := C.elm_layout_part_cursor_style_set(self.obj, _c_part_name, _c_style)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Layout) PartCursorEngineOnlySet(part_name string, engine_only bool) (bool) {
+  _c_part_name := C.CString(part_name)
+  _c_engine_only := (C.Eina_Bool)(0)
+  if engine_only { _c_engine_only = (C.Eina_Bool)(1) }
+  _cgo_return_ := C.elm_layout_part_cursor_engine_only_set(self.obj, _c_part_name, _c_engine_only)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Layout) EdjeObjectCanAccessSet(can_access bool) (bool) {
+  _c_can_access := (C.Eina_Bool)(0)
+  if can_access { _c_can_access = (C.Eina_Bool)(1) }
+  _cgo_return_ := C.elm_layout_edje_object_can_access_set(self.obj, _c_can_access)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Layout) EdjeObjectCanAccessGet() (bool) {
+  _cgo_return_ := C.elm_layout_edje_object_can_access_get(self.obj)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Layout) ContentSet(swallow string, content EvasObjectInterface) (bool) {
+  _c_swallow := C.CString(swallow)
+  var _c_content *C.Evas_Object
+  if content != nil { _c_content = content.GetObj() }
+  _cgo_return_ := C.elm_layout_content_set(self.obj, _c_swallow, _c_content)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Layout) ContentUnset(swallow string) (*EvasObject) {
+  _c_swallow := C.CString(swallow)
+  _cgo_return_ := C.elm_layout_content_unset(self.obj, _c_swallow)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Layout) TextSet(part string, text string) (bool) {
+  _c_part := C.CString(part)
+  _c_text := C.CString(text)
+  _cgo_return_ := C.elm_layout_text_set(self.obj, _c_part, _c_text)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
 }
 
 func (self *Map) ClipSet(clip EvasObjectInterface) () {
@@ -39638,6 +41989,12 @@ func (self *Map) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Map) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Map) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Map) LayerSet(l int) () {
@@ -39792,6 +42149,11 @@ func (self *Map) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Map) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Map) RenderOpSet(op C.Evas_Render_Op) () {
@@ -40646,6 +43008,145 @@ func (self *Map) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Map) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_map_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Map) ZoomSet(zoom int) () {
+  _c_zoom := C.int(zoom)
+  C.elm_map_zoom_set(self.obj, _c_zoom)
+}
+
+func (self *Map) ZoomModeSet(mode C.Elm_Map_Zoom_Mode) () {
+  C.elm_map_zoom_mode_set(self.obj, mode)
+}
+
+func (self *Map) ZoomMinSet(zoom int) () {
+  _c_zoom := C.int(zoom)
+  C.elm_map_zoom_min_set(self.obj, _c_zoom)
+}
+
+func (self *Map) ZoomMaxSet(zoom int) () {
+  _c_zoom := C.int(zoom)
+  C.elm_map_zoom_max_set(self.obj, _c_zoom)
+}
+
+func (self *Map) RegionBringIn(lon float64, lat float64) () {
+  _c_lon := C.double(lon)
+  _c_lat := C.double(lat)
+  C.elm_map_region_bring_in(self.obj, _c_lon, _c_lat)
+}
+
+func (self *Map) RegionShow(lon float64, lat float64) () {
+  _c_lon := C.double(lon)
+  _c_lat := C.double(lat)
+  C.elm_map_region_show(self.obj, _c_lon, _c_lat)
+}
+
+func (self *Map) PausedSet(paused bool) () {
+  _c_paused := (C.Eina_Bool)(0)
+  if paused { _c_paused = (C.Eina_Bool)(1) }
+  C.elm_map_paused_set(self.obj, _c_paused)
+}
+
+func (self *Map) RotateSet(degree float64, cx C.Evas_Coord, cy C.Evas_Coord) () {
+  _c_degree := C.double(degree)
+  C.elm_map_rotate_set(self.obj, _c_degree, cx, cy)
+}
+
+func (self *Map) WheelDisabledSet(disabled bool) () {
+  _c_disabled := (C.Eina_Bool)(0)
+  if disabled { _c_disabled = (C.Eina_Bool)(1) }
+  C.elm_map_wheel_disabled_set(self.obj, _c_disabled)
+}
+
+func (self *Map) UserAgentSet(user_agent string) () {
+  _c_user_agent := C.CString(user_agent)
+  C.elm_map_user_agent_set(self.obj, _c_user_agent)
+}
+
+func (self *Map) OverlayAdd(lon float64, lat float64) (*C.Elm_Map_Overlay) {
+  _c_lon := C.double(lon)
+  _c_lat := C.double(lat)
+  _cgo_return_ := C.elm_map_overlay_add(self.obj, _c_lon, _c_lat)
+  _go_return_ := _cgo_return_
+  return _go_return_
+}
+
+func (self *Map) OverlaysGet() (*C.Eina_List) {
+  _cgo_return_ := C.elm_map_overlays_get(self.obj)
+  _go_return_ := _cgo_return_
+  return _go_return_
+}
+
+func (self *Map) OverlayClassAdd() (*C.Elm_Map_Overlay) {
+  _cgo_return_ := C.elm_map_overlay_class_add(self.obj)
+  _go_return_ := _cgo_return_
+  return _go_return_
+}
+
+func (self *Map) OverlayBubbleAdd() (*C.Elm_Map_Overlay) {
+  _cgo_return_ := C.elm_map_overlay_bubble_add(self.obj)
+  _go_return_ := _cgo_return_
+  return _go_return_
+}
+
+func (self *Map) OverlayRouteAdd(route *C.Elm_Map_Route) (*C.Elm_Map_Overlay) {
+  _cgo_return_ := C.elm_map_overlay_route_add(self.obj, route)
+  _go_return_ := _cgo_return_
+  return _go_return_
+}
+
+func (self *Map) OverlayLineAdd(flon float64, flat float64, tlon float64, tlat float64) (*C.Elm_Map_Overlay) {
+  _c_flon := C.double(flon)
+  _c_flat := C.double(flat)
+  _c_tlon := C.double(tlon)
+  _c_tlat := C.double(tlat)
+  _cgo_return_ := C.elm_map_overlay_line_add(self.obj, _c_flon, _c_flat, _c_tlon, _c_tlat)
+  _go_return_ := _cgo_return_
+  return _go_return_
+}
+
+func (self *Map) OverlayPolygonAdd() (*C.Elm_Map_Overlay) {
+  _cgo_return_ := C.elm_map_overlay_polygon_add(self.obj)
+  _go_return_ := _cgo_return_
+  return _go_return_
+}
+
+func (self *Map) OverlayCircleAdd(lon float64, lat float64, radius float64) (*C.Elm_Map_Overlay) {
+  _c_lon := C.double(lon)
+  _c_lat := C.double(lat)
+  _c_radius := C.double(radius)
+  _cgo_return_ := C.elm_map_overlay_circle_add(self.obj, _c_lon, _c_lat, _c_radius)
+  _go_return_ := _cgo_return_
+  return _go_return_
+}
+
+func (self *Map) OverlayScaleAdd(x C.Evas_Coord, y C.Evas_Coord) (*C.Elm_Map_Overlay) {
+  _cgo_return_ := C.elm_map_overlay_scale_add(self.obj, x, y)
+  _go_return_ := _cgo_return_
+  return _go_return_
+}
+
+func (self *Map) SourceSet(type_ C.Elm_Map_Source_Type, source_name string) () {
+  _c_source_name := C.CString(source_name)
+  C.elm_map_source_set(self.obj, type_, _c_source_name)
+}
+
+func (self *Map) TrackAdd(emap unsafe.Pointer) (*EvasObject) {
+  _cgo_return_ := C.elm_map_track_add(self.obj, emap)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Map) TrackRemove(route EvasObjectInterface) () {
+  var _c_route *C.Evas_Object
+  if route != nil { _c_route = route.GetObj() }
+  C.elm_map_track_remove(self.obj, _c_route)
+}
+
 func (self *MapTrack) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -40654,6 +43155,12 @@ func (self *MapTrack) ClipSet(clip EvasObjectInterface) () {
 
 func (self *MapTrack) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *MapTrack) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *MapTrack) LayerSet(l int) () {
@@ -40808,6 +43315,11 @@ func (self *MapTrack) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *MapTrack) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *MapTrack) RenderOpSet(op C.Evas_Render_Op) () {
@@ -41662,6 +44174,18 @@ func (self *MapTrack) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *MapTrack) Add(emap unsafe.Pointer) (*EvasObject) {
+  _cgo_return_ := C.elm_map_track_add(self.obj, emap)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *MapTrack) Remove(route EvasObjectInterface) () {
+  var _c_route *C.Evas_Object
+  if route != nil { _c_route = route.GetObj() }
+  C.elm_map_track_remove(self.obj, _c_route)
+}
+
 func (self *Mapbuf) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -41670,6 +44194,12 @@ func (self *Mapbuf) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Mapbuf) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Mapbuf) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Mapbuf) LayerSet(l int) () {
@@ -41824,6 +44354,11 @@ func (self *Mapbuf) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Mapbuf) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Mapbuf) RenderOpSet(op C.Evas_Render_Op) () {
@@ -42678,6 +45213,30 @@ func (self *Mapbuf) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Mapbuf) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_mapbuf_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Mapbuf) EnabledSet(enabled bool) () {
+  _c_enabled := (C.Eina_Bool)(0)
+  if enabled { _c_enabled = (C.Eina_Bool)(1) }
+  C.elm_mapbuf_enabled_set(self.obj, _c_enabled)
+}
+
+func (self *Mapbuf) SmoothSet(smooth bool) () {
+  _c_smooth := (C.Eina_Bool)(0)
+  if smooth { _c_smooth = (C.Eina_Bool)(1) }
+  C.elm_mapbuf_smooth_set(self.obj, _c_smooth)
+}
+
+func (self *Mapbuf) AlphaSet(alpha bool) () {
+  _c_alpha := (C.Eina_Bool)(0)
+  if alpha { _c_alpha = (C.Eina_Bool)(1) }
+  C.elm_mapbuf_alpha_set(self.obj, _c_alpha)
+}
+
 func (self *Menu) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -42686,6 +45245,12 @@ func (self *Menu) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Menu) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Menu) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Menu) LayerSet(l int) () {
@@ -42710,7 +45275,7 @@ func (self *Menu) Del() () {
   C.evas_object_del(self.obj)
 }
 
-func (self *Menu) Move(x C.Evas_Coord, y C.Evas_Coord) () {
+func (self *Menu) EVASMove(x C.Evas_Coord, y C.Evas_Coord) () {
   C.evas_object_move(self.obj, x, y)
 }
 
@@ -42840,6 +45405,11 @@ func (self *Menu) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Menu) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Menu) RenderOpSet(op C.Evas_Render_Op) () {
@@ -43694,6 +46264,32 @@ func (self *Menu) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Menu) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_menu_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Menu) ParentSet(parent EvasObjectInterface) () {
+  var _c_parent *C.Evas_Object
+  if parent != nil { _c_parent = parent.GetObj() }
+  C.elm_menu_parent_set(self.obj, _c_parent)
+}
+
+func (self *Menu) Move(x C.Evas_Coord, y C.Evas_Coord) () {
+  C.elm_menu_move(self.obj, x, y)
+}
+
+func (self *Menu) Close() () {
+  C.elm_menu_close(self.obj)
+}
+
+func (self *Menu) ItemSeparatorAdd(parent *C.Elm_Object_Item) (*C.Elm_Object_Item) {
+  _cgo_return_ := C.elm_menu_item_separator_add(self.obj, parent)
+  _go_return_ := _cgo_return_
+  return _go_return_
+}
+
 func (self *Notify) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -43702,6 +46298,12 @@ func (self *Notify) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Notify) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Notify) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Notify) LayerSet(l int) () {
@@ -43856,6 +46458,11 @@ func (self *Notify) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Notify) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Notify) RenderOpSet(op C.Evas_Render_Op) () {
@@ -44710,6 +47317,33 @@ func (self *Notify) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Notify) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_notify_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Notify) ParentSet(parent EvasObjectInterface) () {
+  var _c_parent *C.Evas_Object
+  if parent != nil { _c_parent = parent.GetObj() }
+  C.elm_notify_parent_set(self.obj, _c_parent)
+}
+
+func (self *Notify) OrientSet(orient C.Elm_Notify_Orient) () {
+  C.elm_notify_orient_set(self.obj, orient)
+}
+
+func (self *Notify) TimeoutSet(timeout float64) () {
+  _c_timeout := C.double(timeout)
+  C.elm_notify_timeout_set(self.obj, _c_timeout)
+}
+
+func (self *Notify) AllowEventsSet(allow bool) () {
+  _c_allow := (C.Eina_Bool)(0)
+  if allow { _c_allow = (C.Eina_Bool)(1) }
+  C.elm_notify_allow_events_set(self.obj, _c_allow)
+}
+
 func (self *Panel) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -44718,6 +47352,12 @@ func (self *Panel) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Panel) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Panel) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Panel) LayerSet(l int) () {
@@ -44872,6 +47512,11 @@ func (self *Panel) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Panel) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Panel) RenderOpSet(op C.Evas_Render_Op) () {
@@ -45726,6 +48371,26 @@ func (self *Panel) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Panel) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_panel_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Panel) OrientSet(orient C.Elm_Panel_Orient) () {
+  C.elm_panel_orient_set(self.obj, orient)
+}
+
+func (self *Panel) HiddenSet(hidden bool) () {
+  _c_hidden := (C.Eina_Bool)(0)
+  if hidden { _c_hidden = (C.Eina_Bool)(1) }
+  C.elm_panel_hidden_set(self.obj, _c_hidden)
+}
+
+func (self *Panel) Toggle() () {
+  C.elm_panel_toggle(self.obj)
+}
+
 func (self *Panes) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -45734,6 +48399,12 @@ func (self *Panes) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Panes) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Panes) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Panes) LayerSet(l int) () {
@@ -45888,6 +48559,11 @@ func (self *Panes) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Panes) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Panes) RenderOpSet(op C.Evas_Render_Op) () {
@@ -46742,6 +49418,34 @@ func (self *Panes) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Panes) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_panes_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Panes) FixedSet(fixed bool) () {
+  _c_fixed := (C.Eina_Bool)(0)
+  if fixed { _c_fixed = (C.Eina_Bool)(1) }
+  C.elm_panes_fixed_set(self.obj, _c_fixed)
+}
+
+func (self *Panes) ContentLeftSizeSet(size float64) () {
+  _c_size := C.double(size)
+  C.elm_panes_content_left_size_set(self.obj, _c_size)
+}
+
+func (self *Panes) ContentRightSizeSet(size float64) () {
+  _c_size := C.double(size)
+  C.elm_panes_content_right_size_set(self.obj, _c_size)
+}
+
+func (self *Panes) HorizontalSet(horizontal bool) () {
+  _c_horizontal := (C.Eina_Bool)(0)
+  if horizontal { _c_horizontal = (C.Eina_Bool)(1) }
+  C.elm_panes_horizontal_set(self.obj, _c_horizontal)
+}
+
 func (self *Photocam) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -46750,6 +49454,12 @@ func (self *Photocam) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Photocam) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Photocam) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Photocam) LayerSet(l int) () {
@@ -46904,6 +49614,11 @@ func (self *Photocam) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Photocam) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Photocam) RenderOpSet(op C.Evas_Render_Op) () {
@@ -47758,6 +50473,56 @@ func (self *Photocam) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Photocam) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_photocam_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Photocam) FileSet(file string) (C.Evas_Load_Error) {
+  _c_file := C.CString(file)
+  _cgo_return_ := C.elm_photocam_file_set(self.obj, _c_file)
+  _go_return_ := _cgo_return_
+  return _go_return_
+}
+
+func (self *Photocam) ZoomSet(zoom float64) () {
+  _c_zoom := C.double(zoom)
+  C.elm_photocam_zoom_set(self.obj, _c_zoom)
+}
+
+func (self *Photocam) ZoomModeSet(mode C.Elm_Photocam_Zoom_Mode) () {
+  C.elm_photocam_zoom_mode_set(self.obj, mode)
+}
+
+func (self *Photocam) ImageRegionShow(x int, y int, w int, h int) () {
+  _c_x := C.int(x)
+  _c_y := C.int(y)
+  _c_w := C.int(w)
+  _c_h := C.int(h)
+  C.elm_photocam_image_region_show(self.obj, _c_x, _c_y, _c_w, _c_h)
+}
+
+func (self *Photocam) ImageRegionBringIn(x int, y int, w int, h int) () {
+  _c_x := C.int(x)
+  _c_y := C.int(y)
+  _c_w := C.int(w)
+  _c_h := C.int(h)
+  C.elm_photocam_image_region_bring_in(self.obj, _c_x, _c_y, _c_w, _c_h)
+}
+
+func (self *Photocam) PausedSet(paused bool) () {
+  _c_paused := (C.Eina_Bool)(0)
+  if paused { _c_paused = (C.Eina_Bool)(1) }
+  C.elm_photocam_paused_set(self.obj, _c_paused)
+}
+
+func (self *Photocam) GestureEnabledSet(gesture bool) () {
+  _c_gesture := (C.Eina_Bool)(0)
+  if gesture { _c_gesture = (C.Eina_Bool)(1) }
+  C.elm_photocam_gesture_enabled_set(self.obj, _c_gesture)
+}
+
 func (self *Photo) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -47766,6 +50531,12 @@ func (self *Photo) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Photo) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Photo) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Photo) LayerSet(l int) () {
@@ -47920,6 +50691,11 @@ func (self *Photo) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Photo) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Photo) RenderOpSet(op C.Evas_Render_Op) () {
@@ -48774,6 +51550,42 @@ func (self *Photo) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Photo) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_photo_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Photo) FileSet(file string) (bool) {
+  _c_file := C.CString(file)
+  _cgo_return_ := C.elm_photo_file_set(self.obj, _c_file)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Photo) SizeSet(size int) () {
+  _c_size := C.int(size)
+  C.elm_photo_size_set(self.obj, _c_size)
+}
+
+func (self *Photo) FillInsideSet(fill bool) () {
+  _c_fill := (C.Eina_Bool)(0)
+  if fill { _c_fill = (C.Eina_Bool)(1) }
+  C.elm_photo_fill_inside_set(self.obj, _c_fill)
+}
+
+func (self *Photo) EditableSet(set bool) () {
+  _c_set := (C.Eina_Bool)(0)
+  if set { _c_set = (C.Eina_Bool)(1) }
+  C.elm_photo_editable_set(self.obj, _c_set)
+}
+
+func (self *Photo) AspectFixedSet(fixed bool) () {
+  _c_fixed := (C.Eina_Bool)(0)
+  if fixed { _c_fixed = (C.Eina_Bool)(1) }
+  C.elm_photo_aspect_fixed_set(self.obj, _c_fixed)
+}
+
 func (self *Plug) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -48782,6 +51594,12 @@ func (self *Plug) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Plug) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Plug) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Plug) LayerSet(l int) () {
@@ -48936,6 +51754,11 @@ func (self *Plug) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Plug) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Plug) RenderOpSet(op C.Evas_Render_Op) () {
@@ -49790,6 +52613,22 @@ func (self *Plug) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Plug) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_plug_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Plug) Connect(svcname string, svcnum int, svcsys bool) (bool) {
+  _c_svcname := C.CString(svcname)
+  _c_svcnum := C.int(svcnum)
+  _c_svcsys := (C.Eina_Bool)(0)
+  if svcsys { _c_svcsys = (C.Eina_Bool)(1) }
+  _cgo_return_ := C.elm_plug_connect(self.obj, _c_svcname, _c_svcnum, _c_svcsys)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
 func (self *Progressbar) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -49798,6 +52637,12 @@ func (self *Progressbar) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Progressbar) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Progressbar) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Progressbar) LayerSet(l int) () {
@@ -49952,6 +52797,11 @@ func (self *Progressbar) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Progressbar) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Progressbar) RenderOpSet(op C.Evas_Render_Op) () {
@@ -50806,6 +53656,50 @@ func (self *Progressbar) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Progressbar) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_progressbar_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Progressbar) PulseSet(pulse bool) () {
+  _c_pulse := (C.Eina_Bool)(0)
+  if pulse { _c_pulse = (C.Eina_Bool)(1) }
+  C.elm_progressbar_pulse_set(self.obj, _c_pulse)
+}
+
+func (self *Progressbar) Pulse(state bool) () {
+  _c_state := (C.Eina_Bool)(0)
+  if state { _c_state = (C.Eina_Bool)(1) }
+  C.elm_progressbar_pulse(self.obj, _c_state)
+}
+
+func (self *Progressbar) ValueSet(val float64) () {
+  _c_val := C.double(val)
+  C.elm_progressbar_value_set(self.obj, _c_val)
+}
+
+func (self *Progressbar) SpanSizeSet(size C.Evas_Coord) () {
+  C.elm_progressbar_span_size_set(self.obj, size)
+}
+
+func (self *Progressbar) UnitFormatSet(format string) () {
+  _c_format := C.CString(format)
+  C.elm_progressbar_unit_format_set(self.obj, _c_format)
+}
+
+func (self *Progressbar) HorizontalSet(horizontal bool) () {
+  _c_horizontal := (C.Eina_Bool)(0)
+  if horizontal { _c_horizontal = (C.Eina_Bool)(1) }
+  C.elm_progressbar_horizontal_set(self.obj, _c_horizontal)
+}
+
+func (self *Progressbar) InvertedSet(inverted bool) () {
+  _c_inverted := (C.Eina_Bool)(0)
+  if inverted { _c_inverted = (C.Eina_Bool)(1) }
+  C.elm_progressbar_inverted_set(self.obj, _c_inverted)
+}
+
 func (self *Radio) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -50814,6 +53708,12 @@ func (self *Radio) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Radio) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Radio) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Radio) LayerSet(l int) () {
@@ -50968,6 +53868,11 @@ func (self *Radio) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Radio) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Radio) RenderOpSet(op C.Evas_Render_Op) () {
@@ -51822,6 +54727,34 @@ func (self *Radio) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Radio) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_radio_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Radio) GroupAdd(group EvasObjectInterface) () {
+  var _c_group *C.Evas_Object
+  if group != nil { _c_group = group.GetObj() }
+  C.elm_radio_group_add(self.obj, _c_group)
+}
+
+func (self *Radio) StateValueSet(value int) () {
+  _c_value := C.int(value)
+  C.elm_radio_state_value_set(self.obj, _c_value)
+}
+
+func (self *Radio) ValueSet(value int) () {
+  _c_value := C.int(value)
+  C.elm_radio_value_set(self.obj, _c_value)
+}
+
+func (self *Radio) SelectedObjectGet() (*EvasObject) {
+  _cgo_return_ := C.elm_radio_selected_object_get(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
 func (self *Route) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -51830,6 +54763,12 @@ func (self *Route) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Route) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Route) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Route) LayerSet(l int) () {
@@ -51984,6 +54923,11 @@ func (self *Route) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Route) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Route) RenderOpSet(op C.Evas_Render_Op) () {
@@ -52838,6 +55782,12 @@ func (self *Route) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Route) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_route_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
 func (self *SegmentControl) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -52846,6 +55796,12 @@ func (self *SegmentControl) ClipSet(clip EvasObjectInterface) () {
 
 func (self *SegmentControl) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *SegmentControl) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *SegmentControl) LayerSet(l int) () {
@@ -53000,6 +55956,11 @@ func (self *SegmentControl) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *SegmentControl) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *SegmentControl) RenderOpSet(op C.Evas_Render_Op) () {
@@ -53854,6 +56815,36 @@ func (self *SegmentControl) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *SegmentControl) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_segment_control_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *SegmentControl) ItemAdd(icon EvasObjectInterface, label string) (*C.Elm_Object_Item) {
+  var _c_icon *C.Evas_Object
+  if icon != nil { _c_icon = icon.GetObj() }
+  _c_label := C.CString(label)
+  _cgo_return_ := C.elm_segment_control_item_add(self.obj, _c_icon, _c_label)
+  _go_return_ := _cgo_return_
+  return _go_return_
+}
+
+func (self *SegmentControl) ItemInsertAt(icon EvasObjectInterface, label string, index int) (*C.Elm_Object_Item) {
+  var _c_icon *C.Evas_Object
+  if icon != nil { _c_icon = icon.GetObj() }
+  _c_label := C.CString(label)
+  _c_index := C.int(index)
+  _cgo_return_ := C.elm_segment_control_item_insert_at(self.obj, _c_icon, _c_label, _c_index)
+  _go_return_ := _cgo_return_
+  return _go_return_
+}
+
+func (self *SegmentControl) ItemDelAt(index int) () {
+  _c_index := C.int(index)
+  C.elm_segment_control_item_del_at(self.obj, _c_index)
+}
+
 func (self *Separator) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -53862,6 +56853,12 @@ func (self *Separator) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Separator) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Separator) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Separator) LayerSet(l int) () {
@@ -54016,6 +57013,11 @@ func (self *Separator) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Separator) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Separator) RenderOpSet(op C.Evas_Render_Op) () {
@@ -54870,6 +57872,18 @@ func (self *Separator) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Separator) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_separator_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Separator) HorizontalSet(horizontal bool) () {
+  _c_horizontal := (C.Eina_Bool)(0)
+  if horizontal { _c_horizontal = (C.Eina_Bool)(1) }
+  C.elm_separator_horizontal_set(self.obj, _c_horizontal)
+}
+
 func (self *Slider) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -54878,6 +57892,12 @@ func (self *Slider) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Slider) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Slider) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Slider) LayerSet(l int) () {
@@ -55032,6 +58052,11 @@ func (self *Slider) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Slider) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Slider) RenderOpSet(op C.Evas_Render_Op) () {
@@ -55886,6 +58911,55 @@ func (self *Slider) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Slider) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_slider_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Slider) SpanSizeSet(size C.Evas_Coord) () {
+  C.elm_slider_span_size_set(self.obj, size)
+}
+
+func (self *Slider) UnitFormatSet(format string) () {
+  _c_format := C.CString(format)
+  C.elm_slider_unit_format_set(self.obj, _c_format)
+}
+
+func (self *Slider) IndicatorFormatSet(indicator string) () {
+  _c_indicator := C.CString(indicator)
+  C.elm_slider_indicator_format_set(self.obj, _c_indicator)
+}
+
+func (self *Slider) HorizontalSet(horizontal bool) () {
+  _c_horizontal := (C.Eina_Bool)(0)
+  if horizontal { _c_horizontal = (C.Eina_Bool)(1) }
+  C.elm_slider_horizontal_set(self.obj, _c_horizontal)
+}
+
+func (self *Slider) MinMaxSet(min float64, max float64) () {
+  _c_min := C.double(min)
+  _c_max := C.double(max)
+  C.elm_slider_min_max_set(self.obj, _c_min, _c_max)
+}
+
+func (self *Slider) ValueSet(val float64) () {
+  _c_val := C.double(val)
+  C.elm_slider_value_set(self.obj, _c_val)
+}
+
+func (self *Slider) InvertedSet(inverted bool) () {
+  _c_inverted := (C.Eina_Bool)(0)
+  if inverted { _c_inverted = (C.Eina_Bool)(1) }
+  C.elm_slider_inverted_set(self.obj, _c_inverted)
+}
+
+func (self *Slider) IndicatorShowSet(show bool) () {
+  _c_show := (C.Eina_Bool)(0)
+  if show { _c_show = (C.Eina_Bool)(1) }
+  C.elm_slider_indicator_show_set(self.obj, _c_show)
+}
+
 func (self *Slideshow) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -55894,6 +58968,12 @@ func (self *Slideshow) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Slideshow) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Slideshow) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Slideshow) LayerSet(l int) () {
@@ -56048,6 +59128,11 @@ func (self *Slideshow) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Slideshow) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Slideshow) RenderOpSet(op C.Evas_Render_Op) () {
@@ -56902,6 +59987,61 @@ func (self *Slideshow) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Slideshow) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_slideshow_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Slideshow) ItemAdd(itc *C.Elm_Slideshow_Item_Class, data unsafe.Pointer) (*C.Elm_Object_Item) {
+  _cgo_return_ := C.elm_slideshow_item_add(self.obj, itc, data)
+  _go_return_ := _cgo_return_
+  return _go_return_
+}
+
+func (self *Slideshow) Next() () {
+  C.elm_slideshow_next(self.obj)
+}
+
+func (self *Slideshow) Previous() () {
+  C.elm_slideshow_previous(self.obj)
+}
+
+func (self *Slideshow) TransitionSet(transition string) () {
+  _c_transition := C.CString(transition)
+  C.elm_slideshow_transition_set(self.obj, _c_transition)
+}
+
+func (self *Slideshow) TimeoutSet(timeout float64) () {
+  _c_timeout := C.double(timeout)
+  C.elm_slideshow_timeout_set(self.obj, _c_timeout)
+}
+
+func (self *Slideshow) LoopSet(loop bool) () {
+  _c_loop := (C.Eina_Bool)(0)
+  if loop { _c_loop = (C.Eina_Bool)(1) }
+  C.elm_slideshow_loop_set(self.obj, _c_loop)
+}
+
+func (self *Slideshow) Clear() () {
+  C.elm_slideshow_clear(self.obj)
+}
+
+func (self *Slideshow) LayoutSet(layout string) () {
+  _c_layout := C.CString(layout)
+  C.elm_slideshow_layout_set(self.obj, _c_layout)
+}
+
+func (self *Slideshow) CacheBeforeSet(count int) () {
+  _c_count := C.int(count)
+  C.elm_slideshow_cache_before_set(self.obj, _c_count)
+}
+
+func (self *Slideshow) CacheAfterSet(count int) () {
+  _c_count := C.int(count)
+  C.elm_slideshow_cache_after_set(self.obj, _c_count)
+}
+
 func (self *Spinner) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -56910,6 +60050,12 @@ func (self *Spinner) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Spinner) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Spinner) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Spinner) LayerSet(l int) () {
@@ -57064,6 +60210,11 @@ func (self *Spinner) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Spinner) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Spinner) RenderOpSet(op C.Evas_Render_Op) () {
@@ -57918,6 +61069,66 @@ func (self *Spinner) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Spinner) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_spinner_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Spinner) LabelFormatSet(fmt string) () {
+  _c_fmt := C.CString(fmt)
+  C.elm_spinner_label_format_set(self.obj, _c_fmt)
+}
+
+func (self *Spinner) MinMaxSet(min float64, max float64) () {
+  _c_min := C.double(min)
+  _c_max := C.double(max)
+  C.elm_spinner_min_max_set(self.obj, _c_min, _c_max)
+}
+
+func (self *Spinner) StepSet(step float64) () {
+  _c_step := C.double(step)
+  C.elm_spinner_step_set(self.obj, _c_step)
+}
+
+func (self *Spinner) ValueSet(val float64) () {
+  _c_val := C.double(val)
+  C.elm_spinner_value_set(self.obj, _c_val)
+}
+
+func (self *Spinner) WrapSet(wrap bool) () {
+  _c_wrap := (C.Eina_Bool)(0)
+  if wrap { _c_wrap = (C.Eina_Bool)(1) }
+  C.elm_spinner_wrap_set(self.obj, _c_wrap)
+}
+
+func (self *Spinner) EditableSet(editable bool) () {
+  _c_editable := (C.Eina_Bool)(0)
+  if editable { _c_editable = (C.Eina_Bool)(1) }
+  C.elm_spinner_editable_set(self.obj, _c_editable)
+}
+
+func (self *Spinner) SpecialValueAdd(value float64, label string) () {
+  _c_value := C.double(value)
+  _c_label := C.CString(label)
+  C.elm_spinner_special_value_add(self.obj, _c_value, _c_label)
+}
+
+func (self *Spinner) IntervalSet(interval float64) () {
+  _c_interval := C.double(interval)
+  C.elm_spinner_interval_set(self.obj, _c_interval)
+}
+
+func (self *Spinner) BaseSet(base float64) () {
+  _c_base := C.double(base)
+  C.elm_spinner_base_set(self.obj, _c_base)
+}
+
+func (self *Spinner) RoundSet(rnd int) () {
+  _c_rnd := C.int(rnd)
+  C.elm_spinner_round_set(self.obj, _c_rnd)
+}
+
 func (self *Table) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -57926,6 +61137,12 @@ func (self *Table) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Table) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Table) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Table) LayerSet(l int) () {
@@ -58080,6 +61297,11 @@ func (self *Table) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Table) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Table) RenderOpSet(op C.Evas_Render_Op) () {
@@ -58934,6 +62156,61 @@ func (self *Table) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Table) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_table_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Table) HomogeneousSet(homogeneous bool) () {
+  _c_homogeneous := (C.Eina_Bool)(0)
+  if homogeneous { _c_homogeneous = (C.Eina_Bool)(1) }
+  C.elm_table_homogeneous_set(self.obj, _c_homogeneous)
+}
+
+func (self *Table) PaddingSet(horizontal C.Evas_Coord, vertical C.Evas_Coord) () {
+  C.elm_table_padding_set(self.obj, horizontal, vertical)
+}
+
+func (self *Table) Pack(subobj EvasObjectInterface, x int, y int, w int, h int) () {
+  var _c_subobj *C.Evas_Object
+  if subobj != nil { _c_subobj = subobj.GetObj() }
+  _c_x := C.int(x)
+  _c_y := C.int(y)
+  _c_w := C.int(w)
+  _c_h := C.int(h)
+  C.elm_table_pack(self.obj, _c_subobj, _c_x, _c_y, _c_w, _c_h)
+}
+
+func (self *Table) Unpack(subobj EvasObjectInterface) () {
+  var _c_subobj *C.Evas_Object
+  if subobj != nil { _c_subobj = subobj.GetObj() }
+  C.elm_table_unpack(self.obj, _c_subobj)
+}
+
+func (self *Table) Clear(clear bool) () {
+  _c_clear := (C.Eina_Bool)(0)
+  if clear { _c_clear = (C.Eina_Bool)(1) }
+  C.elm_table_clear(self.obj, _c_clear)
+}
+
+func (self *Table) PackSet(x int, y int, w int, h int) () {
+  _c_x := C.int(x)
+  _c_y := C.int(y)
+  _c_w := C.int(w)
+  _c_h := C.int(h)
+  C.elm_table_pack_set(self.obj, _c_x, _c_y, _c_w, _c_h)
+}
+
+func (self *Table) PackGet() (int, int, int, int) {
+  var _c_x_ C.int
+  var _c_y_ C.int
+  var _c_w_ C.int
+  var _c_h_ C.int
+  C.elm_table_pack_get(self.obj, &_c_x_, &_c_y_, &_c_w_, &_c_h_)
+  return int(_c_x_), int(_c_y_), int(_c_w_), int(_c_h_)
+}
+
 func (self *Thumb) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -58942,6 +62219,12 @@ func (self *Thumb) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Thumb) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Thumb) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Thumb) LayerSet(l int) () {
@@ -59096,6 +62379,11 @@ func (self *Thumb) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Thumb) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Thumb) RenderOpSet(op C.Evas_Render_Op) () {
@@ -59950,6 +63238,34 @@ func (self *Thumb) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Thumb) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_thumb_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Thumb) Reload() () {
+  C.elm_thumb_reload(self.obj)
+}
+
+func (self *Thumb) FileSet(file string, key string) () {
+  _c_file := C.CString(file)
+  _c_key := C.CString(key)
+  C.elm_thumb_file_set(self.obj, _c_file, _c_key)
+}
+
+func (self *Thumb) AnimateSet(s C.Elm_Thumb_Animation_Setting) () {
+  C.elm_thumb_animate_set(self.obj, s)
+}
+
+func (self *Thumb) EditableSet(edit bool) (bool) {
+  _c_edit := (C.Eina_Bool)(0)
+  if edit { _c_edit = (C.Eina_Bool)(1) }
+  _cgo_return_ := C.elm_thumb_editable_set(self.obj, _c_edit)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
 func (self *Toolbar) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -59958,6 +63274,12 @@ func (self *Toolbar) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Toolbar) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Toolbar) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Toolbar) LayerSet(l int) () {
@@ -60112,6 +63434,11 @@ func (self *Toolbar) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Toolbar) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Toolbar) RenderOpSet(op C.Evas_Render_Op) () {
@@ -60966,6 +64293,57 @@ func (self *Toolbar) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Toolbar) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_toolbar_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Toolbar) IconSizeSet(icon_size int) () {
+  _c_icon_size := C.int(icon_size)
+  C.elm_toolbar_icon_size_set(self.obj, _c_icon_size)
+}
+
+func (self *Toolbar) IconOrderLookupSet(order C.Elm_Icon_Lookup_Order) () {
+  C.elm_toolbar_icon_order_lookup_set(self.obj, order)
+}
+
+func (self *Toolbar) ShrinkModeSet(shrink_mode C.Elm_Toolbar_Shrink_Mode) () {
+  C.elm_toolbar_shrink_mode_set(self.obj, shrink_mode)
+}
+
+func (self *Toolbar) HomogeneousSet(homogeneous bool) () {
+  _c_homogeneous := (C.Eina_Bool)(0)
+  if homogeneous { _c_homogeneous = (C.Eina_Bool)(1) }
+  C.elm_toolbar_homogeneous_set(self.obj, _c_homogeneous)
+}
+
+func (self *Toolbar) MenuParentSet(parent EvasObjectInterface) () {
+  var _c_parent *C.Evas_Object
+  if parent != nil { _c_parent = parent.GetObj() }
+  C.elm_toolbar_menu_parent_set(self.obj, _c_parent)
+}
+
+func (self *Toolbar) AlignSet(align float64) () {
+  _c_align := C.double(align)
+  C.elm_toolbar_align_set(self.obj, _c_align)
+}
+
+func (self *Toolbar) HorizontalSet(horizontal bool) () {
+  _c_horizontal := (C.Eina_Bool)(0)
+  if horizontal { _c_horizontal = (C.Eina_Bool)(1) }
+  C.elm_toolbar_horizontal_set(self.obj, _c_horizontal)
+}
+
+func (self *Toolbar) StandardPrioritySet(priority int) () {
+  _c_priority := C.int(priority)
+  C.elm_toolbar_standard_priority_set(self.obj, _c_priority)
+}
+
+func (self *Toolbar) SelectModeSet(mode C.Elm_Object_Select_Mode) () {
+  C.elm_toolbar_select_mode_set(self.obj, mode)
+}
+
 func (self *Player) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -60974,6 +64352,12 @@ func (self *Player) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Player) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Player) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Player) LayerSet(l int) () {
@@ -61128,6 +64512,11 @@ func (self *Player) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Player) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Player) RenderOpSet(op C.Evas_Render_Op) () {
@@ -61982,6 +65371,12 @@ func (self *Player) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Player) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_player_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
 func (self *Video) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -61990,6 +65385,12 @@ func (self *Video) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Video) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Video) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Video) LayerSet(l int) () {
@@ -62144,6 +65545,11 @@ func (self *Video) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Video) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Video) RenderOpSet(op C.Evas_Render_Op) () {
@@ -62998,6 +66404,53 @@ func (self *Video) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Video) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_video_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Video) FileSet(filename string) (bool) {
+  _c_filename := C.CString(filename)
+  _cgo_return_ := C.elm_video_file_set(self.obj, _c_filename)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Video) Play() () {
+  C.elm_video_play(self.obj)
+}
+
+func (self *Video) Pause() () {
+  C.elm_video_pause(self.obj)
+}
+
+func (self *Video) Stop() () {
+  C.elm_video_stop(self.obj)
+}
+
+func (self *Video) AudioMuteSet(mute bool) () {
+  _c_mute := (C.Eina_Bool)(0)
+  if mute { _c_mute = (C.Eina_Bool)(1) }
+  C.elm_video_audio_mute_set(self.obj, _c_mute)
+}
+
+func (self *Video) AudioLevelSet(volume float64) () {
+  _c_volume := C.double(volume)
+  C.elm_video_audio_level_set(self.obj, _c_volume)
+}
+
+func (self *Video) PlayPositionSet(position float64) () {
+  _c_position := C.double(position)
+  C.elm_video_play_position_set(self.obj, _c_position)
+}
+
+func (self *Video) RememberPositionSet(remember bool) () {
+  _c_remember := (C.Eina_Bool)(0)
+  if remember { _c_remember = (C.Eina_Bool)(1) }
+  C.elm_video_remember_position_set(self.obj, _c_remember)
+}
+
 func (self *Web) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -63006,6 +66459,12 @@ func (self *Web) ClipSet(clip EvasObjectInterface) () {
 
 func (self *Web) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
+}
+
+func (self *Web) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
 }
 
 func (self *Web) LayerSet(l int) () {
@@ -63160,6 +66619,11 @@ func (self *Web) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Web) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Web) RenderOpSet(op C.Evas_Render_Op) () {
@@ -64014,6 +67478,168 @@ func (self *Web) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
 }
 
+func (self *Web) Add() (*EvasObject) {
+  _cgo_return_ := C.elm_web_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Web) UseragentSet(user_agent string) () {
+  _c_user_agent := C.CString(user_agent)
+  C.elm_web_useragent_set(self.obj, _c_user_agent)
+}
+
+func (self *Web) TabPropagateSet(propagate bool) () {
+  _c_propagate := (C.Eina_Bool)(0)
+  if propagate { _c_propagate = (C.Eina_Bool)(1) }
+  C.elm_web_tab_propagate_set(self.obj, _c_propagate)
+}
+
+func (self *Web) UriSet(uri string) (bool) {
+  _c_uri := C.CString(uri)
+  _cgo_return_ := C.elm_web_uri_set(self.obj, _c_uri)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Web) BgColorSet(r int, g int, b int, a int) () {
+  _c_r := C.int(r)
+  _c_g := C.int(g)
+  _c_b := C.int(b)
+  _c_a := C.int(a)
+  C.elm_web_bg_color_set(self.obj, _c_r, _c_g, _c_b, _c_a)
+}
+
+func (self *Web) PopupSelectedSet(index int) () {
+  _c_index := C.int(index)
+  C.elm_web_popup_selected_set(self.obj, _c_index)
+}
+
+func (self *Web) PopupDestroy() (bool) {
+  _cgo_return_ := C.elm_web_popup_destroy(self.obj)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Web) TextMatchesMark(string string, case_sensitive bool, highlight bool, limit uint) (uint) {
+  _c_string := C.CString(string)
+  _c_case_sensitive := (C.Eina_Bool)(0)
+  if case_sensitive { _c_case_sensitive = (C.Eina_Bool)(1) }
+  _c_highlight := (C.Eina_Bool)(0)
+  if highlight { _c_highlight = (C.Eina_Bool)(1) }
+  _c_limit := C.uint(limit)
+  _cgo_return_ := C.elm_web_text_matches_mark(self.obj, _c_string, _c_case_sensitive, _c_highlight, _c_limit)
+  _go_return_ := uint(_cgo_return_)
+  return _go_return_
+}
+
+func (self *Web) TextMatchesUnmarkAll() (bool) {
+  _cgo_return_ := C.elm_web_text_matches_unmark_all(self.obj)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Web) TextMatchesHighlightSet(highlight bool) (bool) {
+  _c_highlight := (C.Eina_Bool)(0)
+  if highlight { _c_highlight = (C.Eina_Bool)(1) }
+  _cgo_return_ := C.elm_web_text_matches_highlight_set(self.obj, _c_highlight)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Web) Stop() (bool) {
+  _cgo_return_ := C.elm_web_stop(self.obj)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Web) Reload() (bool) {
+  _cgo_return_ := C.elm_web_reload(self.obj)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Web) ReloadFull() (bool) {
+  _cgo_return_ := C.elm_web_reload_full(self.obj)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Web) Back() (bool) {
+  _cgo_return_ := C.elm_web_back(self.obj)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Web) Forward() (bool) {
+  _cgo_return_ := C.elm_web_forward(self.obj)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Web) Navigate(steps int) (bool) {
+  _c_steps := C.int(steps)
+  _cgo_return_ := C.elm_web_navigate(self.obj, _c_steps)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Web) BackPossibleGet() (bool) {
+  _cgo_return_ := C.elm_web_back_possible_get(self.obj)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Web) ForwardPossibleGet() (bool) {
+  _cgo_return_ := C.elm_web_forward_possible_get(self.obj)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Web) NavigatePossibleGet(steps int) (bool) {
+  _c_steps := C.int(steps)
+  _cgo_return_ := C.elm_web_navigate_possible_get(self.obj, _c_steps)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Web) HistoryEnabledSet(enabled bool) () {
+  _c_enabled := (C.Eina_Bool)(0)
+  if enabled { _c_enabled = (C.Eina_Bool)(1) }
+  C.elm_web_history_enabled_set(self.obj, _c_enabled)
+}
+
+func (self *Web) ZoomSet(zoom float64) () {
+  _c_zoom := C.double(zoom)
+  C.elm_web_zoom_set(self.obj, _c_zoom)
+}
+
+func (self *Web) ZoomModeSet(mode C.Elm_Web_Zoom_Mode) () {
+  C.elm_web_zoom_mode_set(self.obj, mode)
+}
+
+func (self *Web) RegionShow(x int, y int, w int, h int) () {
+  _c_x := C.int(x)
+  _c_y := C.int(y)
+  _c_w := C.int(w)
+  _c_h := C.int(h)
+  C.elm_web_region_show(self.obj, _c_x, _c_y, _c_w, _c_h)
+}
+
+func (self *Web) RegionBringIn(x int, y int, w int, h int) () {
+  _c_x := C.int(x)
+  _c_y := C.int(y)
+  _c_w := C.int(w)
+  _c_h := C.int(h)
+  C.elm_web_region_bring_in(self.obj, _c_x, _c_y, _c_w, _c_h)
+}
+
+func (self *Web) InwinModeSet(value bool) () {
+  _c_value := (C.Eina_Bool)(0)
+  if value { _c_value = (C.Eina_Bool)(1) }
+  C.elm_web_inwin_mode_set(self.obj, _c_value)
+}
+
 func (self *Win) ClipSet(clip EvasObjectInterface) () {
   var _c_clip *C.Evas_Object
   if clip != nil { _c_clip = clip.GetObj() }
@@ -64024,7 +67650,13 @@ func (self *Win) ClipUnset() () {
   C.evas_object_clip_unset(self.obj)
 }
 
-func (self *Win) LayerSet(l int) () {
+func (self *Win) EVASFocusSet(focus bool) () {
+  _c_focus := (C.Eina_Bool)(0)
+  if focus { _c_focus = (C.Eina_Bool)(1) }
+  C.evas_object_focus_set(self.obj, _c_focus)
+}
+
+func (self *Win) EVASLayerSet(l int) () {
   _c_l := C.short(l)
   C.evas_object_layer_set(self.obj, _c_l)
 }
@@ -64070,11 +67702,11 @@ func (self *Win) ColorSet(r int, g int, b int, a int) () {
   C.evas_object_color_set(self.obj, _c_r, _c_g, _c_b, _c_a)
 }
 
-func (self *Win) Raise() () {
+func (self *Win) EVASRaise() () {
   C.evas_object_raise(self.obj)
 }
 
-func (self *Win) Lower() () {
+func (self *Win) EVASLower() () {
   C.evas_object_lower(self.obj)
 }
 
@@ -64176,6 +67808,11 @@ func (self *Win) AntiAliasSet(antialias bool) () {
   _c_antialias := (C.Eina_Bool)(0)
   if antialias { _c_antialias = (C.Eina_Bool)(1) }
   C.evas_object_anti_alias_set(self.obj, _c_antialias)
+}
+
+func (self *Win) EVASScaleSet(scale float64) () {
+  _c_scale := C.double(scale)
+  C.evas_object_scale_set(self.obj, _c_scale)
 }
 
 func (self *Win) RenderOpSet(op C.Evas_Render_Op) () {
@@ -65028,5 +68665,323 @@ func (self *Win) ScrollLockYSet(lock bool) () {
 
 func (self *Win) ThemeSet(th *C.Elm_Theme) () {
   C.elm_object_theme_set(self.obj, th)
+}
+
+func (self *Win) InwinAdd() (*EvasObject) {
+  _cgo_return_ := C.elm_win_inwin_add(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Win) InwinActivate() () {
+  C.elm_win_inwin_activate(self.obj)
+}
+
+func (self *Win) InwinContentSet(content EvasObjectInterface) () {
+  var _c_content *C.Evas_Object
+  if content != nil { _c_content = content.GetObj() }
+  C.elm_win_inwin_content_set(self.obj, _c_content)
+}
+
+func (self *Win) InwinContentUnset() (*EvasObject) {
+  _cgo_return_ := C.elm_win_inwin_content_unset(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Win) Add(name string, type_ C.Elm_Win_Type) (*EvasObject) {
+  _c_name := C.CString(name)
+  _cgo_return_ := C.elm_win_add(self.obj, _c_name, type_)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Win) ResizeObjectAdd(subobj EvasObjectInterface) () {
+  var _c_subobj *C.Evas_Object
+  if subobj != nil { _c_subobj = subobj.GetObj() }
+  C.elm_win_resize_object_add(self.obj, _c_subobj)
+}
+
+func (self *Win) ResizeObjectDel(subobj EvasObjectInterface) () {
+  var _c_subobj *C.Evas_Object
+  if subobj != nil { _c_subobj = subobj.GetObj() }
+  C.elm_win_resize_object_del(self.obj, _c_subobj)
+}
+
+func (self *Win) TitleSet(title string) () {
+  _c_title := C.CString(title)
+  C.elm_win_title_set(self.obj, _c_title)
+}
+
+func (self *Win) IconNameSet(icon_name string) () {
+  _c_icon_name := C.CString(icon_name)
+  C.elm_win_icon_name_set(self.obj, _c_icon_name)
+}
+
+func (self *Win) RoleSet(role string) () {
+  _c_role := C.CString(role)
+  C.elm_win_role_set(self.obj, _c_role)
+}
+
+func (self *Win) IconObjectSet(icon EvasObjectInterface) () {
+  var _c_icon *C.Evas_Object
+  if icon != nil { _c_icon = icon.GetObj() }
+  C.elm_win_icon_object_set(self.obj, _c_icon)
+}
+
+func (self *Win) AutodelSet(autodel bool) () {
+  _c_autodel := (C.Eina_Bool)(0)
+  if autodel { _c_autodel = (C.Eina_Bool)(1) }
+  C.elm_win_autodel_set(self.obj, _c_autodel)
+}
+
+func (self *Win) Activate() () {
+  C.elm_win_activate(self.obj)
+}
+
+func (self *Win) Lower() () {
+  C.elm_win_lower(self.obj)
+}
+
+func (self *Win) Raise() () {
+  C.elm_win_raise(self.obj)
+}
+
+func (self *Win) Center(h bool, v bool) () {
+  _c_h := (C.Eina_Bool)(0)
+  if h { _c_h = (C.Eina_Bool)(1) }
+  _c_v := (C.Eina_Bool)(0)
+  if v { _c_v = (C.Eina_Bool)(1) }
+  C.elm_win_center(self.obj, _c_h, _c_v)
+}
+
+func (self *Win) BorderlessSet(borderless bool) () {
+  _c_borderless := (C.Eina_Bool)(0)
+  if borderless { _c_borderless = (C.Eina_Bool)(1) }
+  C.elm_win_borderless_set(self.obj, _c_borderless)
+}
+
+func (self *Win) ShapedSet(shaped bool) () {
+  _c_shaped := (C.Eina_Bool)(0)
+  if shaped { _c_shaped = (C.Eina_Bool)(1) }
+  C.elm_win_shaped_set(self.obj, _c_shaped)
+}
+
+func (self *Win) AlphaSet(alpha bool) () {
+  _c_alpha := (C.Eina_Bool)(0)
+  if alpha { _c_alpha = (C.Eina_Bool)(1) }
+  C.elm_win_alpha_set(self.obj, _c_alpha)
+}
+
+func (self *Win) OverrideSet(override bool) () {
+  _c_override := (C.Eina_Bool)(0)
+  if override { _c_override = (C.Eina_Bool)(1) }
+  C.elm_win_override_set(self.obj, _c_override)
+}
+
+func (self *Win) FullscreenSet(fullscreen bool) () {
+  _c_fullscreen := (C.Eina_Bool)(0)
+  if fullscreen { _c_fullscreen = (C.Eina_Bool)(1) }
+  C.elm_win_fullscreen_set(self.obj, _c_fullscreen)
+}
+
+func (self *Win) MaximizedSet(maximized bool) () {
+  _c_maximized := (C.Eina_Bool)(0)
+  if maximized { _c_maximized = (C.Eina_Bool)(1) }
+  C.elm_win_maximized_set(self.obj, _c_maximized)
+}
+
+func (self *Win) IconifiedSet(iconified bool) () {
+  _c_iconified := (C.Eina_Bool)(0)
+  if iconified { _c_iconified = (C.Eina_Bool)(1) }
+  C.elm_win_iconified_set(self.obj, _c_iconified)
+}
+
+func (self *Win) WithdrawnSet(withdrawn bool) () {
+  _c_withdrawn := (C.Eina_Bool)(0)
+  if withdrawn { _c_withdrawn = (C.Eina_Bool)(1) }
+  C.elm_win_withdrawn_set(self.obj, _c_withdrawn)
+}
+
+func (self *Win) UrgentSet(urgent bool) () {
+  _c_urgent := (C.Eina_Bool)(0)
+  if urgent { _c_urgent = (C.Eina_Bool)(1) }
+  C.elm_win_urgent_set(self.obj, _c_urgent)
+}
+
+func (self *Win) DemandAttentionSet(demand_attention bool) () {
+  _c_demand_attention := (C.Eina_Bool)(0)
+  if demand_attention { _c_demand_attention = (C.Eina_Bool)(1) }
+  C.elm_win_demand_attention_set(self.obj, _c_demand_attention)
+}
+
+func (self *Win) ModalSet(modal bool) () {
+  _c_modal := (C.Eina_Bool)(0)
+  if modal { _c_modal = (C.Eina_Bool)(1) }
+  C.elm_win_modal_set(self.obj, _c_modal)
+}
+
+func (self *Win) AspectSet(aspect float64) () {
+  _c_aspect := C.double(aspect)
+  C.elm_win_aspect_set(self.obj, _c_aspect)
+}
+
+func (self *Win) SizeBaseSet(w int, h int) () {
+  _c_w := C.int(w)
+  _c_h := C.int(h)
+  C.elm_win_size_base_set(self.obj, _c_w, _c_h)
+}
+
+func (self *Win) SizeBaseGet() (int, int) {
+  var _c_w_ C.int
+  var _c_h_ C.int
+  C.elm_win_size_base_get(self.obj, &_c_w_, &_c_h_)
+  return int(_c_w_), int(_c_h_)
+}
+
+func (self *Win) SizeStepSet(w int, h int) () {
+  _c_w := C.int(w)
+  _c_h := C.int(h)
+  C.elm_win_size_step_set(self.obj, _c_w, _c_h)
+}
+
+func (self *Win) SizeStepGet() (int, int) {
+  var _c_w_ C.int
+  var _c_h_ C.int
+  C.elm_win_size_step_get(self.obj, &_c_w_, &_c_h_)
+  return int(_c_w_), int(_c_h_)
+}
+
+func (self *Win) LayerSet(layer int) () {
+  _c_layer := C.int(layer)
+  C.elm_win_layer_set(self.obj, _c_layer)
+}
+
+func (self *Win) NorenderPush() () {
+  C.elm_win_norender_push(self.obj)
+}
+
+func (self *Win) NorenderPop() () {
+  C.elm_win_norender_pop(self.obj)
+}
+
+func (self *Win) NorenderGet() (int) {
+  _cgo_return_ := C.elm_win_norender_get(self.obj)
+  _go_return_ := int(_cgo_return_)
+  return _go_return_
+}
+
+func (self *Win) Render() () {
+  C.elm_win_render(self.obj)
+}
+
+func (self *Win) RotationSet(rotation int) () {
+  _c_rotation := C.int(rotation)
+  C.elm_win_rotation_set(self.obj, _c_rotation)
+}
+
+func (self *Win) RotationWithResizeSet(rotation int) () {
+  _c_rotation := C.int(rotation)
+  C.elm_win_rotation_with_resize_set(self.obj, _c_rotation)
+}
+
+func (self *Win) StickySet(sticky bool) () {
+  _c_sticky := (C.Eina_Bool)(0)
+  if sticky { _c_sticky = (C.Eina_Bool)(1) }
+  C.elm_win_sticky_set(self.obj, _c_sticky)
+}
+
+func (self *Win) ConformantSet(conformant bool) () {
+  _c_conformant := (C.Eina_Bool)(0)
+  if conformant { _c_conformant = (C.Eina_Bool)(1) }
+  C.elm_win_conformant_set(self.obj, _c_conformant)
+}
+
+func (self *Win) QuickpanelSet(quickpanel bool) () {
+  _c_quickpanel := (C.Eina_Bool)(0)
+  if quickpanel { _c_quickpanel = (C.Eina_Bool)(1) }
+  C.elm_win_quickpanel_set(self.obj, _c_quickpanel)
+}
+
+func (self *Win) QuickpanelPriorityMajorSet(priority int) () {
+  _c_priority := C.int(priority)
+  C.elm_win_quickpanel_priority_major_set(self.obj, _c_priority)
+}
+
+func (self *Win) QuickpanelPriorityMinorSet(priority int) () {
+  _c_priority := C.int(priority)
+  C.elm_win_quickpanel_priority_minor_set(self.obj, _c_priority)
+}
+
+func (self *Win) QuickpanelZoneSet(zone int) () {
+  _c_zone := C.int(zone)
+  C.elm_win_quickpanel_zone_set(self.obj, _c_zone)
+}
+
+func (self *Win) PropFocusSkipSet(skip bool) () {
+  _c_skip := (C.Eina_Bool)(0)
+  if skip { _c_skip = (C.Eina_Bool)(1) }
+  C.elm_win_prop_focus_skip_set(self.obj, _c_skip)
+}
+
+func (self *Win) IllumeCommandSend(command C.Elm_Illume_Command, params unsafe.Pointer) () {
+  C.elm_win_illume_command_send(self.obj, command, params)
+}
+
+func (self *Win) InlinedImageObjectGet() (*EvasObject) {
+  _cgo_return_ := C.elm_win_inlined_image_object_get(self.obj)
+  _go_return_ := &EvasObject{_cgo_return_}
+  return _go_return_
+}
+
+func (self *Win) ScreenConstrainSet(constrain bool) () {
+  _c_constrain := (C.Eina_Bool)(0)
+  if constrain { _c_constrain = (C.Eina_Bool)(1) }
+  C.elm_win_screen_constrain_set(self.obj, _c_constrain)
+}
+
+func (self *Win) ScreenConstrainGet() (bool) {
+  _cgo_return_ := C.elm_win_screen_constrain_get(self.obj)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
+}
+
+func (self *Win) FocusHighlightEnabledSet(enabled bool) () {
+  _c_enabled := (C.Eina_Bool)(0)
+  if enabled { _c_enabled = (C.Eina_Bool)(1) }
+  C.elm_win_focus_highlight_enabled_set(self.obj, _c_enabled)
+}
+
+func (self *Win) FocusHighlightStyleSet(style string) () {
+  _c_style := C.CString(style)
+  C.elm_win_focus_highlight_style_set(self.obj, _c_style)
+}
+
+func (self *Win) KeyboardModeSet(mode C.Elm_Win_Keyboard_Mode) () {
+  C.elm_win_keyboard_mode_set(self.obj, mode)
+}
+
+func (self *Win) KeyboardWinSet(is_keyboard bool) () {
+  _c_is_keyboard := (C.Eina_Bool)(0)
+  if is_keyboard { _c_is_keyboard = (C.Eina_Bool)(1) }
+  C.elm_win_keyboard_win_set(self.obj, _c_is_keyboard)
+}
+
+func (self *Win) IndicatorModeSet(mode C.Elm_Win_Indicator_Mode) () {
+  C.elm_win_indicator_mode_set(self.obj, mode)
+}
+
+func (self *Win) IndicatorOpacitySet(mode C.Elm_Win_Indicator_Opacity_Mode) () {
+  C.elm_win_indicator_opacity_set(self.obj, mode)
+}
+
+func (self *Win) SocketListen(svcname string, svcnum int, svcsys bool) (bool) {
+  _c_svcname := C.CString(svcname)
+  _c_svcnum := C.int(svcnum)
+  _c_svcsys := (C.Eina_Bool)(0)
+  if svcsys { _c_svcsys = (C.Eina_Bool)(1) }
+  _cgo_return_ := C.elm_win_socket_listen(self.obj, _c_svcname, _c_svcnum, _c_svcsys)
+  _go_return_ := _cgo_return_ == (C.Eina_Bool)(1)
+  return _go_return_
 }
 

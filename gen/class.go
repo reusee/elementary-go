@@ -9,14 +9,14 @@ import (
 type Class struct {
   Name string
   CConstructor *CFunc
-  GoConstructFunc BridgeFunc
+  GoConstructFunc *BridgeFunc
   Methods []*BridgeFunc
 }
 
 func (self *Generator) collectClasses() {
   for _, fun := range self.CFuncs {
     if strings.HasPrefix(fun.Name, "elm_") && strings.HasSuffix(fun.Name, "_add") && fun.ReturnType == "Evas_Object *" {
-      if _, has := DISCARD_CONSTRUCT_FUNCS[fun.Name]; has { continue }
+      if DISCARD_CONSTRUCT_FUNCS.Has(fun.Name) { continue }
       className := convertToClassName(fun.Name)
       class := &Class{
         Name: className,
@@ -72,14 +72,15 @@ func convertToClassName(name string) string {
   return name
 }
 
-func makeGoConstructFunc(className string, fun *CFunc) BridgeFunc {
-  gofunc := BridgeFunc{}
+func makeGoConstructFunc(className string, fun *CFunc) *BridgeFunc {
+  gofunc := new(BridgeFunc)
+  gofunc.CFunc = fun
   gofunc.Name = "New" + className
   for i, name := range fun.ParamNames {
     gofunc.ConvertParam(name, fun.ParamTypes[i])
   }
   gofunc.ReturnTypes = []string{"*" + className}
   gofunc.CgoFunc = fun.Name
-  gofunc.ReturnExpression = "&" + className + "{obj: _cgo_return_}"
+  gofunc.ReturnExprs = append(gofunc.ReturnExprs, "&" + className + "{obj: _cgo_return_}")
   return gofunc
 }

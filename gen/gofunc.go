@@ -4,6 +4,7 @@ import (
   "go/token"
   "log"
   "strings"
+  "fmt"
 )
 
 type BridgeFunc struct {
@@ -16,7 +17,8 @@ type BridgeFunc struct {
   HelperCodesAfterCgo []string
   CgoFunc string
   CgoArguments []string
-  ReturnExpression string
+  CgoHasReturn bool
+  ReturnExprs []string
   CFunc *CFunc
 }
 
@@ -27,9 +29,8 @@ func (self *BridgeFunc) ConvertParam(name, t string) {
   self.ParamNames = append(self.ParamNames, name)
   mapFunc, ok := PARAM_MAPPINGS[t]
   if !ok {
-    // try to map it directory
-    mapFunc = tryDirectMap(t)
-    if mapFunc == nil { log.Fatalf("no map for param type %s", t) }
+    mapFunc = tryDirectMapParam(t)
+    if mapFunc == nil { log.Fatalf("no map for param type %s: %s", t, self.CFunc.Name) }
   }
   mappedName, mappedType, helperCodes := mapFunc(name)
   self.CgoArguments = append(self.CgoArguments, mappedName)
@@ -39,13 +40,44 @@ func (self *BridgeFunc) ConvertParam(name, t string) {
 
 func (self *BridgeFunc) ConvertReturnType(t string) {
   mapFunc, ok := RETURN_MAPPINGS[t]
-  if !ok { log.Fatalf("no map for return type %s", t) }
+  if !ok {
+    mapFunc = tryDirectMapReturn(t)
+    if mapFunc == nil { log.Fatalf("no map for return type %s: %s", t, self.CFunc.Name) }
+  }
   mappedType, helperCodes := mapFunc()
   self.ReturnTypes = append(self.ReturnTypes, mappedType)
   self.HelperCodesAfterCgo = append(self.HelperCodesAfterCgo, helperCodes...)
+  self.ReturnExprs = append(self.ReturnExprs, "_go_return_")
 }
 
-func tryDirectMap(t string) ParamMapFunc {
+func (self *BridgeFunc) ConvertReturnParam(name, t string) {
+  goType, cType, returnExpr := RETURN_PARAM_MAPPINGS[t](name)
+  self.ReturnTypes = append(self.ReturnTypes, goType)
+  cVar := fmt.Sprintf("_c_%s_", name)
+  self.HelperCodes = append(self.HelperCodes, fmt.Sprintf("var %s %s", cVar, cType))
+  self.CgoArguments = append(self.CgoArguments, "&" + cVar)
+  self.ReturnExprs = append(self.ReturnExprs, returnExpr)
+}
+
+func tryDirectMapParam(t string) ParamMapFunc {
+  goType := convertToCgoType(t)
+  if goType == "" { return nil }
+  return func(name string) (string, string, []string) {
+    return name, goType, nil
+  }
+}
+
+func tryDirectMapReturn(t string) ReturnMapFunc {
+  goType := convertToCgoType(t)
+  if goType == "" { return nil }
+  return func() (string, []string) {
+    return goType, []string{
+      "_go_return_ := _cgo_return_",
+    }
+  }
+}
+
+func convertToCgoType(t string) string {
   t = strings.Replace(t, "const ", "", -1)
   inModule := false
   for _, m := range C_MODULES {
@@ -54,19 +86,19 @@ func tryDirectMap(t string) ParamMapFunc {
       break
     }
   }
-  if !inModule { return nil }
+  if !inModule { return "" }
   ps := 0
   for strings.HasSuffix(t, "*") {
     ps++
     t = strings.TrimSpace(t[:len(t) - 1])
   }
-  goType := strings.Repeat("*", ps) + "C." + t
-  return func(name string) (string, string, []string) {
-    return name, goType, nil
-  }
+  return strings.Repeat("*", ps) + "C." + t
 }
 
 func (self *BridgeFunc) Gen() string {
+  if self.CFunc.ReturnType != "void" {
+    self.CgoHasReturn = true
+  }
   ret := "func"
   if self.Receiver != "" {
     ret += " (self " + self.Receiver + ")"
@@ -86,7 +118,7 @@ func (self *BridgeFunc) Gen() string {
     ret += "  " + code + "\n"
   }
   ret += "  "
-  if len(self.ReturnTypes) != 0 {
+  if self.CgoHasReturn {
     ret += "_cgo_return_ := "
   }
   ret += "C." + self.CgoFunc + "("
@@ -98,8 +130,8 @@ func (self *BridgeFunc) Gen() string {
   for _, code := range self.HelperCodesAfterCgo {
     ret += "  " + code + "\n"
   }
-  if len(self.ReturnTypes) != 0 {
-    ret += "  return " + self.ReturnExpression + "\n"
+  if len(self.ReturnExprs) != 0 {
+    ret += "  return " + strings.Join(self.ReturnExprs, ", ") + "\n"
   }
   ret += "}\n"
   return ret
