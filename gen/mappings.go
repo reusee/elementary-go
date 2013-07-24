@@ -28,13 +28,14 @@ var PARAM_MAPPINGS = map[string]ParamMapFunc{
   },
   "const char *": func(name string) (string, string, []string) {
     return "_c_" + name, "string", []string{
-      fmt.Sprintf("_c_%s := C.CString(%s)", name, name),
+      fmt.Sprintf("var _c_%s *C.char", name),
+      fmt.Sprintf("if len(%s) > 0 { _c_%s = C.CString(%s) }", name, name, name),
     }
   },
   "char *": func(name string) (string, string, []string) {
     return "_c_" + name, "string", []string{
-      fmt.Sprintf("_c_%s := C.CString(%s)", name, name),
-      fmt.Sprintf("defer C.free(unsafe.Pointer(_c_%s))", name),
+      fmt.Sprintf("var _c_%s *C.char", name),
+      fmt.Sprintf("if len(%s) > 0 { _c_%s = C.CString(%s); defer C.free(unsafe.Pointer(_c_%s)) }", name, name, name, name),
     }
   },
   "const char *[]": func(name string) (string, string, []string) {

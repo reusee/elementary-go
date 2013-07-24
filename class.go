@@ -653,7 +653,8 @@ func (self *Win) GetObj() *C.Evas_Object { return self.obj }
 func NewWin(parent EvasObjectInterface, name string, type_ C.Elm_Win_Type) (*Win) {
   var _c_parent *C.Evas_Object
   if parent != nil { _c_parent = parent.GetObj() }
-  _c_name := C.CString(name)
+  var _c_name *C.char
+  if len(name) > 0 { _c_name = C.CString(name) }
   _cgo_return_ := C.elm_win_add(_c_parent, _c_name, type_)
   return &Win{obj: _cgo_return_}
 }
