@@ -20,8 +20,10 @@ func (self *Generator) collectHeaderInfo() {
       self.EnumInfos = append(self.EnumInfos, lineSp[1:])
     case "typedef":
       self.TypedefInfos = append(self.TypedefInfos, lineSp[1:])
+    case "func:variadic":
+      // discard
     default:
-      log.Fatal("not handle header info:", lineSp[0])
+      log.Fatal("not handle header info type ", lineSp[0])
     }
   }
 }

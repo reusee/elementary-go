@@ -20,7 +20,7 @@ func (self *Generator) stat() {
     }
   }
   p("exported %d / %d functions\n", n, len(self.CFuncs))
-  p("not expoted:\n")
+  p("not exported:\n")
   for _, k := range SortedKeysOfStrIntMap(moduleStat) {
     p("%s %d\n", k, moduleStat[k])
   }

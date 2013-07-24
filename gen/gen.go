@@ -1,13 +1,5 @@
 package main
 
-import (
-  "fmt"
-)
-
-func init() {
-  fmt.Printf("")
-}
-
 type Generator struct {
   FuncInfos [][]string
   EnumInfos [][]string
@@ -17,6 +9,8 @@ type Generator struct {
   CEnums map[string]string
 
   Classes []*Class
+
+  EinaFuncs []*BridgeFunc
 }
 
 func main() {
@@ -34,6 +28,9 @@ func main() {
   generator.collectGeneralMethods()
   generator.collectClassMethods()
   generator.generateGeneralMethods()
+
+  generator.collectEinaFuncs()
+  generator.generateEinaFuncs()
 
   generator.stat()
 }

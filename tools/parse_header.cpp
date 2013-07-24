@@ -49,7 +49,11 @@ class FindNamedClassVisitor
           return true; // discard deprecated functions
         }
       }
-      cout << "func|";
+      if (Declaration->isVariadic()) {
+        cout << "func:variadic|";
+      } else {
+        cout << "func|";
+      }
       auto name_info = Declaration->getNameInfo().getName();
       auto name = name_info.getAsString();
       cout << name;
