@@ -5,6 +5,15 @@ package elm
 #include <Emotion.h>
 #include <Eio.h>
 #include <stdlib.h>
+
+extern void CallCb(void*, void*);
+static void call_cb(void *cb, Evas_Object *obj, void *event_info) {
+  CallCb(cb, event_info);
+}
+void hook(Evas_Object *obj, const char *ev, void *data) {
+  evas_object_smart_callback_add(obj, ev, call_cb, data);
+}
+
 #cgo pkg-config: elementary emotion eio
 */
 import "C"
@@ -49,4 +58,28 @@ func ConvertStringSliceToC(ss []string) **C.char {
     cstrs[i] = C.CString(ss[i])
   }
   return &cstrs[0]
+}
+
+type EvInfo struct {
+  CInfo unsafe.Pointer
+}
+
+func fromCEvInfo(info unsafe.Pointer) *EvInfo {
+  return &EvInfo{info}
+}
+
+type Callback func(*EvInfo)
+
+func Connect(target EvasObjectInterface, ev string, cb Callback) {
+  evStr := C.CString(ev)
+  C.hook(target.GetObj(), evStr, unsafe.Pointer(&cb))
+  C.free(unsafe.Pointer(evStr))
+}
+
+var (
+  EV_CLICKED = C.CString("clicked")
+)
+
+func (self *Button) OnClicked(cb Callback) {
+  C.hook(self.obj, EV_CLICKED, unsafe.Pointer(&cb))
 }

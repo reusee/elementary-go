@@ -8,6 +8,10 @@ import (
 func TestBasicWin(t *testing.T) {
   win := NewWin(nil, "hello", WIN_BASIC)
   win.TitleSet("Hello, world!")
+  Connect(win, "delete,request", func(info *EvInfo) {
+    fmt.Printf("%v\n", info)
+    Exit()
+  })
 
   bg := NewBg(win)
   bg.SizeHintWeightSet(0.0, 0.0)
@@ -31,6 +35,9 @@ func TestBasicWin(t *testing.T) {
   btn.SizeHintWeightSet(0.0, 0.0)
   box.PackEnd(btn)
   btn.Show()
+  btn.OnClicked(func(info *EvInfo) {
+    fmt.Printf("clicked %v\n", info.CInfo)
+  })
 
   win.Show()
   fmt.Printf("running\n")
